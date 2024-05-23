@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/core/layout/main_layout.dart';
+import 'widgets/home_carousel_slider.dart';
+import 'widgets/about_section.dart';
+import 'widgets/video_section.dart';
+import 'widgets/home_services_section.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -59,96 +63,33 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MainLayout(
       title: 'Home Page',
-      child: Column(
-        children: [
-          Container(
-            height: 200, // Adjust the height to make the hero section smaller
-            child: Stack(
-              children: [
-                PageView.builder(
-                  controller: _pageController,
-                  itemCount: imageUrls.length,
-                  itemBuilder: (context, index) {
-                    return Stack(
-                      children: [
-                        Image.asset(
-                          imageUrls[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Adjust padding to make text box smaller
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min, // Minimize the size of the column
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 500),
-                                  child: Text(
-                                    titles[index],
-                                    key: Key(titles[index]),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: index == _currentPageIndex ? 20 : 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 500),
-                                  child: Text(
-                                    descriptions[index],
-                                    key: Key(descriptions[index]),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 16,
-                          bottom: 16,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: const Text('Schedule A Tour'),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                  onPageChanged: (int index) {
-                    setState(() {
-                      _currentPageIndex = index;
-                    });
-                  },
-                ),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            CarouselSlider(
+              imageUrls: imageUrls,
+              titles: titles,
+              descriptions: descriptions,
+              onPageChanged: (int index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+              currentPageIndex: _currentPageIndex,
             ),
-          ),
-          const Text(
-            'Your additional content goes here...',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 24),
+            AboutUsSection(),
+            const SizedBox(height: 24),
+            PlayVideoSection(
+              onVideoPlay: () {
+                // Handle video play
+                print('Video played');
+              },
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+            ServicesSection(),
+          ],
+        ),
       ),
     );
   }

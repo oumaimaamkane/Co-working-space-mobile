@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:coworking_space_mobile/features/constants.dart';
 
 class MainLayout extends StatefulWidget {
   final String title;
@@ -31,6 +32,7 @@ class _MainLayoutState extends State<MainLayout> {
     });
   }
 
+  
   Widget _buildMenuItem(String title, {VoidCallback? onTap, bool hasSubItems = false}) {
     return HoverableListTile(
       title: title,
@@ -117,7 +119,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      title: const Text('My App Bar'),
+      title: const Text('LOGO'),
       actions: [
         IconButton(
           icon: isMenuOpen ? const Icon(Icons.close) : const Icon(Icons.menu),
