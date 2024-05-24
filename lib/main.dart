@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFF1E3954),
         ),
       ),
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.register,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }
