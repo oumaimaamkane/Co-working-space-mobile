@@ -4,12 +4,16 @@ class ServiceBox extends StatefulWidget {
   final IconData iconData;
   final String title;
   final String description;
+  final bool isExpanded;
+  final VoidCallback onTap; // Add onTap parameter
 
   const ServiceBox({
     Key? key,
     required this.iconData,
     required this.title,
     required this.description,
+    this.isExpanded = false,
+    required this.onTap, // Define onTap parameter
   }) : super(key: key);
 
   @override
@@ -17,37 +21,35 @@ class ServiceBox extends StatefulWidget {
 }
 
 class _ServiceBoxState extends State<ServiceBox> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: _isExpanded ? 200 : 100, // Adjust the height of the service box
+      height: widget.isExpanded ? 200 : 100,
       decoration: BoxDecoration(
-        color: _isExpanded ? Color(0xFF55bbae) : Colors.white,
+        color: widget.isExpanded ? const Color(0xFF55bbae) : Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(8),
       child: InkWell(
         onTap: () {
-          setState(() {
-            _isExpanded = !_isExpanded;
-          });
+          widget.onTap(); // Call onTap function when tapped
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RotationTransition(
-              turns: Tween(begin: 0.0, end: 0.5).animate(CurvedAnimation(
+            ScaleTransition(
+              scale: Tween<double>(begin: 1, end: widget.isExpanded ? 1.5 : 1)
+                  .animate(CurvedAnimation(
                 parent: ModalRoute.of(context)!.animation!,
                 curve: Curves.fastOutSlowIn,
               )),
               child: Icon(
                 widget.iconData,
                 size: 40,
-                color: Color.fromARGB(255, 60, 132, 122), // Customize the icon color
+                color: const Color.fromARGB(
+                    255, 60, 132, 122),
               ),
             ),
             const SizedBox(height: 8),
@@ -62,7 +64,7 @@ class _ServiceBoxState extends State<ServiceBox> {
             const SizedBox(height: 8),
             AnimatedCrossFade(
               duration: const Duration(milliseconds: 300),
-              crossFadeState: _isExpanded
+              crossFadeState: widget.isExpanded
                   ? CrossFadeState.showSecond
                   : CrossFadeState.showFirst,
               firstChild: Container(),
