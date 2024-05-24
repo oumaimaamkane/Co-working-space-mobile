@@ -6,12 +6,12 @@ import 'widgets/about_section.dart';
 import 'widgets/video_section.dart';
 import 'widgets/home_services_section.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   final List<String> imageUrls = [
     'images/leyer1.jpg',
     'images/leyer2.jpg',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'service_box.dart';
+import 'package:coworking_space_mobile/features/constants.dart';
 
 class ServicesSection extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _ServicesSectionState extends State<ServicesSection> {
             onPressed: () {
               // Add your action here
             },
-            // style: buttonStyle, // You can define buttonStyle if you want
+            style: buttonStyle, // You can define buttonStyle if you want
             child: const Text('Explore Spaces'),
           ),
           ServiceBox(
@@ -82,4 +83,3 @@ class _ServicesSectionState extends State<ServicesSection> {
     );
   }
 }
-  

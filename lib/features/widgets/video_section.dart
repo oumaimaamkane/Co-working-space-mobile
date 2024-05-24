@@ -9,7 +9,7 @@ class PlayVideoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Colors.grey[200],
+      // color: Colors.grey[200],
       child: Column(
         children: [
           const Text(
@@ -22,17 +22,33 @@ class PlayVideoSection extends StatelessWidget {
           const SizedBox(height: 10),
           GestureDetector(
             onTap: onVideoPlay,
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.play_circle_outline,
-                size: 48,
-                color: Colors.blue,
-              ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'images/leyer1.jpg', // Your video preview image path
+                  width: double.infinity,
+                  height: 200, // Adjust the height as needed
+                  fit: BoxFit.cover,
+                ),
+                Positioned.fill(
+                  child: Container(
+                    color: Colors.black.withOpacity(0.6), // Adjust opacity as needed
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.5), // Adjust opacity as needed
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.play_circle_outline,
+                    size: 48,
+                    color: Color(0xFF55bbae),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
