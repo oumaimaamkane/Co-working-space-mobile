@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -15,6 +16,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous screen
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -23,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Image.asset(
-                "assets/images/vector-2.png",
+                "images/vector-2.png",
                 width: 428,
                 height: 457,
               ),
@@ -251,7 +262,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(width: 2.5),
                       InkWell(
                         onTap: () {
-                          // Navigate to login screen
+                          Navigator.pushNamed(context, AppRoutes.login);
                         },
                         child: const Text(
                           'Log In ',

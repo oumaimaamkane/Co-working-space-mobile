@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:coworking_space_mobile/core/layout/main_layout.dart';
 import 'widgets/home_carousel_slider.dart';
 import 'widgets/about_section.dart';
 import 'widgets/video_section.dart';
@@ -61,36 +60,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MainLayout(
-      title: 'Home Page',
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            CarouselSlider(
-              imageUrls: imageUrls,
-              titles: titles,
-              descriptions: descriptions,
-              onPageChanged: (int index) {
-                setState(() {
-                  _currentPageIndex = index;
-                });
-              },
-              currentPageIndex: _currentPageIndex,
-            ),
-            const SizedBox(height: 24),
-            AboutUsSection(),
-            const SizedBox(height: 24),
-            PlayVideoSection(
-              onVideoPlay: () {
-                // Handle video play
-                print('Video played');
-              },
-            ),
-            const SizedBox(height: 24),
-            ServicesSection(),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          CarouselSlider(
+            imageUrls: imageUrls,
+            titles: titles,
+            descriptions: descriptions,
+            onPageChanged: (int index) {
+              setState(() {
+                _currentPageIndex = index;
+              });
+            },
+            currentPageIndex: _currentPageIndex,
+          ),
+          const SizedBox(height: 24),
+          AboutUsSection(),
+          const SizedBox(height: 24),
+          PlayVideoSection(
+            onVideoPlay: () {
+              // Handle video play
+              print('Video played');
+            },
+          ),
+          const SizedBox(height: 24),
+          ServicesSection(),
+        ],
       ),
     );
   }
 }
+  

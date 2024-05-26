@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:email_validator/email_validator.dart'; // Import email validator package
 
 class LoginScreen extends StatefulWidget {
@@ -14,7 +15,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -24,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 15, top: 15),
                 child: Image.asset(
-                  "assets/images/vector-1.png",
+                  "images/vector-1.png",
                   width: 413,
                   height: 457,
                 ),
@@ -178,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(width: 2.5),
                         InkWell(
                           onTap: () {
-                            // Navigate to sign up screen
+                            Navigator.pushNamed(context, AppRoutes.register);
                           },
                           child: const Text(
                             'Sign Up',

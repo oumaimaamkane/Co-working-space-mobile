@@ -1,9 +1,4 @@
-// lib/config/routes/app_routes.dart
-
 import 'package:flutter/material.dart';
-// import 'package:your_project/features/events.dart';
-// import 'package:your_project/features/about.dart';
-// import 'package:your_project/features/profile.dart';
 import 'package:coworking_space_mobile/features/home.dart';
 import 'package:coworking_space_mobile/features/contact.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/login.dart';
