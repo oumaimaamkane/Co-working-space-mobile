@@ -1,6 +1,7 @@
+// lib/screens/signup_screen.dart
+
 import 'package:flutter/material.dart';
-import 'package:coworking_space_mobile/config/routes/app_routes.dart';
-import 'package:coworking_space_mobile/features/constants.dart';
+import 'package:coworking_space_mobile/features/Auth/data/datasources/auth_service.dart';  // Import the AuthRemoteDataSource
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _repassController = TextEditingController();
+  final AuthRemoteDataSource _authRemoteDataSource = AuthRemoteDataSource();  // Instantiate AuthRemoteDataSource
 
   @override
   Widget build(BuildContext context) {
@@ -223,59 +225,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 25),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: SizedBox(
-                      width: 329,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Add your sign-up logic here
-                        },
-                        style: buttonStyle,
-                        child: const Text(
-                          'Create account',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                          ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    width: 232,
+                    height: 55,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        String name = _nameController.text;
+                        String email = _emailController.text;
+                        String password = _passController.text;
+                        // Call the register function from AuthRemoteDataSource
+                        try {
+                          await _authRemoteDataSource.register(name, email, password);
+                          // Handle success
+                          print("User registered successfully");
+                        } catch (e) {
+                          // Handle error
+                          print(e.toString());
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 82, 197, 181),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      const Text(
-                        'Already have an account?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 63, 126, 118),
-                          fontSize: 13,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 2.5),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.login);
-                        },
-                        child: const Text(
-                          'Log In ',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 82, 197, 181),
-                            fontSize: 13,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

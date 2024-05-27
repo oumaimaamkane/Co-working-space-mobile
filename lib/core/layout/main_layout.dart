@@ -27,22 +27,45 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       appBar: MyAppBar(),
       body: _screens[_selectedIndex], // Use the selected screen
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: const Color.fromARGB(255, 49, 111, 103),
-        unselectedItemColor: Colors.grey,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      selectedItemColor: const Color.fromARGB(255, 49, 111, 103),
+      unselectedItemColor: Colors.grey,
+      items: [
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.contact_mail),
+          label: 'Contact',
+        ),
+        BottomNavigationBarItem(
+          icon: PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
+            onSelected: (String result) {
+              _onPopupMenuSelected(result);
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'profile',
+                child: Text('Profile'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'settings',
+                child: Text('Settings'),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contact_mail),
-            label: 'Contact',
-          ),
-        ],
-      ),
+          label: 'More',
+        ),
+      ],
     );
   }
 
@@ -50,6 +73,17 @@ class _MainLayoutState extends State<MainLayout> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _onPopupMenuSelected(String value) {
+    switch (value) {
+      case 'profile':
+        Navigator.pushNamed(context, AppRoutes.profile);
+        break;
+      case 'settings':
+        // Navigator.pushNamed(context, AppRoutes.settings);
+        break;
+    }
   }
 }
 
