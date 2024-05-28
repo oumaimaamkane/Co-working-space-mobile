@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
-import 'package:email_validator/email_validator.dart'; // Import email validator package
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,7 +12,36 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Key for the form
+  final _formKey = GlobalKey<FormState>();
+
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passController.text,
+        );
+
+        String userId = userCredential.user!.uid;
+
+        // Fetch user role from Firestore
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+        String role = userDoc['role'];
+
+        if (role == 'admin') {
+          Navigator.pushReplacementNamed(context, AppRoutes.dashmin);
+        } else if (role == 'user') {
+          Navigator.pushReplacementNamed(context, AppRoutes.clientProfile);
+        } else {
+          // Handle unexpected roles
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Unknown role')));
+        }
+      } catch (e) {
+        print('Failed to login: $e');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to login: $e')));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       validator: (value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            !EmailValidator.validate(value)) {
-                          // Add null check before accessing isEmpty
+                        if (value == null || value.isEmpty || !EmailValidator.validate(value)) {
                           return 'Please enter a valid email address';
                         }
                         return null;
@@ -135,10 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          // Add null check before accessing isEmpty
                           return 'Please enter your password';
                         } else if (value.length < 6) {
-                          // Add null check before accessing length
                           return 'Password must be at least 6 characters long';
                         }
                         return null;
@@ -151,14 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 329,
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState != null) {
-                              if (_formKey.currentState!.validate()) {
-                                // If all validations pass, perform login
-                                // Add your login logic here
-                              }
-                            }
-                          },
+                          onPressed: _login,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF55bbae),
                           ),

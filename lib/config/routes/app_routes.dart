@@ -3,15 +3,18 @@ import 'package:coworking_space_mobile/features/home.dart';
 import 'package:coworking_space_mobile/features/contact.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/login.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/register.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/dashmin.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/profile.dart';
 
 class AppRoutes {
   static const String home = '/home';
   static const String events = '/events';
   static const String about = '/about';
   static const String contact = '/contact';
-  static const String profile = '/profile';
+  static const String clientProfile = '/profile';
   static const String login = '/login';
   static const String register = '/register';
+  static const String dashmin = '/dashmin';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -23,12 +26,14 @@ class AppRoutes {
       //   return MaterialPageRoute(builder: (_) => AboutScreen());
       case contact:
         return MaterialPageRoute(builder: (_) => ContactScreen());
-      // case profile:
-      //   return MaterialPageRoute(builder: (_) => ProfileScreen());
       case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case register:
         return MaterialPageRoute(builder: (_) => SignUpScreen());
+      case dashmin:
+        return MaterialPageRoute(builder: (_) => DashminScreen());
+      case clientProfile:
+        return MaterialPageRoute(builder: (_) => ProfileScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

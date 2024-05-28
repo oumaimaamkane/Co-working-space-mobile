@@ -1,7 +1,8 @@
-// lib/screens/signup_screen.dart
-
 import 'package:flutter/material.dart';
-import 'package:coworking_space_mobile/features/Auth/data/datasources/auth_service.dart';  // Import the AuthRemoteDataSource
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coworking_space_mobile/config/routes/app_routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -13,7 +14,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _repassController = TextEditingController();
-  final AuthRemoteDataSource _authRemoteDataSource = AuthRemoteDataSource();  // Instantiate AuthRemoteDataSource
+
+  Future<void> _register() async {
+  try {
+    String name = _nameController.text;
+    String email = _emailController.text;
+    String password = _passController.text;
+
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    await userCredential.user!.updateDisplayName(name);
+
+    // Save user role in Firestore
+    await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+      'name': name,
+      'email': email,
+      'role': 'user', // Assign default role 'user'
+    });
+
+    // Navigate to the login screen
+    Navigator.pushReplacementNamed(context, AppRoutes.login);
+  } catch (e) {
+    print('Failed to register user: $e');
+    // Handle registration errors or display error message
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -230,20 +259,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 232,
                     height: 55,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        String name = _nameController.text;
-                        String email = _emailController.text;
-                        String password = _passController.text;
-                        // Call the register function from AuthRemoteDataSource
-                        try {
-                          await _authRemoteDataSource.register(name, email, password);
-                          // Handle success
-                          print("User registered successfully");
-                        } catch (e) {
-                          // Handle error
-                          print(e.toString());
-                        }
-                      },
+                      onPressed: _register, // Call the register function
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 82, 197, 181),
                         shape: RoundedRectangleBorder(

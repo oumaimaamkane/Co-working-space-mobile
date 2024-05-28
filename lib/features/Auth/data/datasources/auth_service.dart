@@ -4,7 +4,7 @@ import 'dart:convert';
 class AuthRemoteDataSource {
   Future<void> register(String name, String email, String password) async {
     final response = await http.post(
-      Uri.parse('https://your-laravel-backend.com/api/register'),
+      Uri.parse('http://127.0.0.1:8000/api/register'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -23,7 +23,7 @@ class AuthRemoteDataSource {
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Failed to register user');
+      throw Exception('Failed to register user: ${response.body}');
     }
   }
 }

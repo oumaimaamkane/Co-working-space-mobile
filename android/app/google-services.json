@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1067299307317",
+    "project_id": "coworking-db",
+    "storage_bucket": "coworking-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067299307317:android:d40a8d11761434118fd67c",
+        "android_client_info": {
+          "package_name": "com.afritsy.coworkingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnT-T5ZwCbwNEMMekCSXqSl7F3crCErKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

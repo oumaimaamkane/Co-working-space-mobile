@@ -78,7 +78,7 @@ class _MainLayoutState extends State<MainLayout> {
   void _onPopupMenuSelected(String value) {
     switch (value) {
       case 'profile':
-        Navigator.pushNamed(context, AppRoutes.profile);
+        // Navigator.pushNamed(context, AppRoutes.profile);
         break;
       case 'settings':
         // Navigator.pushNamed(context, AppRoutes.settings);
