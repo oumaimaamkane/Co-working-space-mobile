@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
+//import 'package:coworking_space_mobile/config/sync_functions/sync_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -27,6 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
         // Fetch user role from Firestore
         DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
         String role = userDoc['role'];
+
+        // Sync with MySQL
+        //await SyncAuth.syncUserToMySQL(userId, userCredential.user!.displayName!, _emailController.text, role);
 
         if (role == 'admin') {
           Navigator.pushReplacementNamed(context, AppRoutes.dashmin);

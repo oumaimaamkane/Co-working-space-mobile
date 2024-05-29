@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:coworking_space_mobile/config/sync_functions/sync_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -16,33 +16,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _repassController = TextEditingController();
 
   Future<void> _register() async {
-  try {
-    String name = _nameController.text;
-    String email = _emailController.text;
-    String password = _passController.text;
+    try {
+      String name = _nameController.text;
+      String email = _emailController.text;
+      String password = _passController.text;
 
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    await userCredential.user!.updateDisplayName(name);
+      await userCredential.user!.updateDisplayName(name);
 
-    // Save user role in Firestore
-    await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
-      'name': name,
-      'email': email,
-      'role': 'user', // Assign default role 'user'
-    });
+      String userId = userCredential.user!.uid;
+      String role = 'user';
 
-    // Navigate to the login screen
-    Navigator.pushReplacementNamed(context, AppRoutes.login);
-  } catch (e) {
-    print('Failed to register user: $e');
-    // Handle registration errors or display error message
+      // Save user role in Firestore
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'name': name,
+        'email': email,
+        'password': password,
+        'role': role, // Assign default role 'user'
+      });
+
+      // Sync with MySQL
+      await SyncAuth.syncUserToMySQL(name, email, password);
+
+      // Navigate to the login screen
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    } catch (e) {
+      print('Failed to register user: $e');
+      // Handle registration errors or display error message
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
