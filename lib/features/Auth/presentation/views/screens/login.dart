@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
-//import 'package:coworking_space_mobile/config/sync_functions/sync_auth.dart';
+//import 'package:coworking_space_mobile/config/services/sync_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

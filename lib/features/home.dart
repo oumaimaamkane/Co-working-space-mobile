@@ -4,6 +4,11 @@ import 'widgets/home_carousel_slider.dart';
 import 'widgets/about_section.dart';
 import 'widgets/video_section.dart';
 import 'widgets/home_services_section.dart';
+import 'widgets/membership_section.dart';
+import 'widgets/home_benefits_section.dart';
+import 'widgets/brand_list.dart';
+import 'widgets/event_host_section.dart';
+import 'widgets/contact_section.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -85,6 +90,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 24),
           ServicesSection(),
+          const SizedBox(height: 24),
+          MembershipSection(),
+          const SizedBox(height: 24),
+          BenefitsSection(),
+          const SizedBox(height: 24),
+          BrandList(),
+          const SizedBox(height: 24),
+          EventHostSection(),
+          const SizedBox(height: 24),
+          ContactSection(),
         ],
       ),
     );

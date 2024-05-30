@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coworking_space_mobile/config/sync_functions/sync_auth.dart';
+import 'package:coworking_space_mobile/config/services/sync_auth.dart';
+import 'package:coworking_space_mobile/features/widgets/preloader_dots.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -15,7 +16,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _repassController = TextEditingController();
 
+  bool _isLoading = false; // Track loading state
+
   Future<void> _register() async {
+    setState(() {
+      _isLoading = true; // Set loading state to true
+    });
+
     try {
       String name = _nameController.text;
       String email = _emailController.text;
@@ -31,40 +38,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
       String userId = userCredential.user!.uid;
       String role = 'user';
 
-      // Save user role in Firestore
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'name': name,
         'email': email,
         'password': password,
-        'role': role, // Assign default role 'user'
+        'role': role,
       });
 
-      // Sync with MySQL
       await SyncAuth.syncUserToMySQL(name, email, password);
 
-      // Navigate to the login screen
       Navigator.pushReplacementNamed(context, AppRoutes.login);
     } catch (e) {
       print('Failed to register user: $e');
       // Handle registration errors or display error message
+    } finally {
+      setState(() {
+        _isLoading = false; // Set loading state to false
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // Navigate back to the previous screen
-          },
-        ),
-      ),
+      appBar: _isLoading
+          ? null // Hide AppBar when loading
+          : AppBar(
+              backgroundColor: Colors.white,
+              iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context); // Navigate back to the previous screen
+                },
+              ),
+            ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: _isLoading
+          ? Container(
+              color: const Color.fromARGB(255, 90, 90, 90),
+              child: const Center(child: BouncingPreloader()),
+            )
+          : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -293,3 +308,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
+
