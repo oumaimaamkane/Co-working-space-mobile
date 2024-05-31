@@ -1,54 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
-//import 'package:coworking_space_mobile/config/services/sync_auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
-  Future<void> _login() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text,
-          password: _passController.text,
-        );
-
-        String userId = userCredential.user!.uid;
-
-        // Fetch user role from Firestore
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-        String role = userDoc['role'];
-
-        // Sync with MySQL
-        //await SyncAuth.syncUserToMySQL(userId, userCredential.user!.displayName!, _emailController.text, role);
-
-        if (role == 'admin') {
-          Navigator.pushReplacementNamed(context, AppRoutes.dashmin);
-        } else if (role == 'user') {
-          Navigator.pushReplacementNamed(context, AppRoutes.clientProfile);
-        } else {
-          // Handle unexpected roles
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Unknown role')));
-        }
-      } catch (e) {
-        print('Failed to login: $e');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to login: $e')));
-      }
-    }
-  }
-
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final viewModel = LoginViewModel();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -63,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: viewModel.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -93,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 50),
                     TextFormField(
-                      controller: _emailController,
+                      controller: viewModel.emailController,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Color(0xFF393939),
@@ -133,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 30),
                     TextFormField(
-                      controller: _passController,
+                      controller: viewModel.passController,
                       obscureText: true,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
@@ -181,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 329,
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: _login,
+                          onPressed: () => viewModel.login(context),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF55bbae),
                           ),
