@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/register_viewmodel.dart';
 import 'package:coworking_space_mobile/features/widgets/preloader_dots.dart';
 import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override
@@ -13,14 +14,15 @@ class SignUpScreen extends StatelessWidget {
           appBar: viewModel.isLoading
               ? null
               : AppBar(
+                  leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
                   backgroundColor: Colors.white,
                   iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+                  // leading: IconButton(
+                  //   icon: const Icon(Icons.arrow_back),
+                  //   onPressed: () {
+                  //     Navigator.pop(context);
+                  //   },
+                  // ),
                 ),
           backgroundColor: Colors.white,
           body: viewModel.isLoading

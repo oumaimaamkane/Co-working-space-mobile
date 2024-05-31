@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
+import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/core/layout/main_layout.dart';
-
-final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  ); // Initialize Firebase App with options
+  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Coworking Space',
       theme: ThemeData(
         primarySwatch: Colors.teal,
@@ -26,10 +25,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const MainLayout(
-        title: 'Coworking Space',  // Provide the title here
+        title: 'Coworking Space',
       ),
-      onGenerateRoute: AppRoutes.generateRoute,
-      navigatorObservers: [routeObserver],
+      getPages: AppRoutes.pages,
     );
   }
 }

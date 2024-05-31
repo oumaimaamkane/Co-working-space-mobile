@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -10,15 +12,16 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        // elevation: 0,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
       ),
       body: SingleChildScrollView(
         child: Form(

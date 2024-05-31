@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:coworking_space_mobile/core/layout/app_bar.dart';
 import 'package:coworking_space_mobile/features/home.dart';
 import 'package:coworking_space_mobile/features/contact.dart';
-import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 
 class MainLayout extends StatefulWidget {
   final String title;
@@ -25,7 +26,10 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(
+        title: widget.title,
+        showBackArrow: false, // Don't show the back arrow icon
+      ),
       body: _screens[_selectedIndex], // Use the selected screen
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -39,16 +43,16 @@ class _MainLayoutState extends State<MainLayout> {
       unselectedItemColor: Colors.grey,
       items: [
         const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(LineAwesomeIcons.home),
           label: 'Home',
         ),
         const BottomNavigationBarItem(
-          icon: Icon(Icons.contact_mail),
+          icon: Icon(LineAwesomeIcons.envelope),
           label: 'Contact',
         ),
         BottomNavigationBarItem(
           icon: PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
+            icon: const Icon(LineAwesomeIcons.bars),
             onSelected: (String result) {
               _onPopupMenuSelected(result);
             },
@@ -85,28 +89,4 @@ class _MainLayoutState extends State<MainLayout> {
         break;
     }
   }
-}
-
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: const Text('LOGO'),
-      actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.person,
-            color: Color.fromARGB(255, 62, 141, 130),
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, AppRoutes.login);
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
