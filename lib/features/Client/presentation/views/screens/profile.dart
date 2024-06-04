@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
-import 'package:coworking_space_mobile/features/widgets/profile/profile_menu.dart';
+import 'package:coworking_space_mobile/features/widgets/profile_menu.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/core/layout/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -121,10 +121,9 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     confirm: ElevatedButton(
                       onPressed: () {
-                        // Sign out the user
                         FirebaseAuth.instance.signOut();
-                        // Navigate to the home screen
-                        Get.offAllNamed(AppRoutes.home);
+                        Get.back(); // Go back from confirmation dialog
+                        Get.back(); // Go back to MainLayout
                       },
                       child: const Text("Yes"),
                     ),

@@ -5,7 +5,7 @@ import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/register.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/dashmin.dart';
 import 'package:coworking_space_mobile/features/Client/presentation/views/screens/profile.dart';
-import 'package:coworking_space_mobile/features/widgets/profile/update_profile_screen.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/update_profile_screen.dart';
 
 class AppRoutes {
   static const String home = '/home';
