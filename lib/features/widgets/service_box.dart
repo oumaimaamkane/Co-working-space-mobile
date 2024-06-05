@@ -5,16 +5,18 @@ class ServiceBox extends StatefulWidget {
   final String title;
   final String description;
   final bool isExpanded;
-  final VoidCallback onTap; // Add onTap parameter
+  final VoidCallback onTap; 
+  final Animation<double> scaleAnimation;
 
   const ServiceBox({
-    Key? key,
+    super.key,
     required this.iconData,
     required this.title,
     required this.description,
     this.isExpanded = false,
-    required this.onTap, // Define onTap parameter
-  }) : super(key: key);
+    required this.onTap,
+    required this.scaleAnimation,
+  });
 
   @override
   _ServiceBoxState createState() => _ServiceBoxState();
@@ -27,12 +29,14 @@ class _ServiceBoxState extends State<ServiceBox> {
       duration: const Duration(milliseconds: 300),
       height: widget.isExpanded ? 200 : 100,
       decoration: BoxDecoration(
-        color: widget.isExpanded ? const Color(0xFF55bbae) : Colors.white,
+        color: widget.isExpanded ? const Color(0xFF55bbae) : const Color.fromARGB(255, 210, 210, 210),
         borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(8),
-      child: InkWell(
+      child: Transform.scale(
+        scale: widget.scaleAnimation.value,
+        child: InkWell(
         onTap: () {
           widget.onTap(); // Call onTap function when tapped
         },
@@ -80,7 +84,7 @@ class _ServiceBoxState extends State<ServiceBox> {
             ),
           ],
         ),
-      ),
+      ),)
     );
   }
 }

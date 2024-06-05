@@ -10,10 +10,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 90, 90, 90),
+          backgroundColor: Color.fromARGB(255, 0, 0, 0),
         ),
       ),
       home: const MainLayout(

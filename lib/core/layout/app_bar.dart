@@ -9,7 +9,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showPersonIcon;
   final bool showBackArrow;
 
-  const MyAppBar({
+  const MyAppBar({super.key, 
     required this.title,
     this.showPersonIcon = true,
     this.showBackArrow = true,
@@ -20,7 +20,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       leading: showBackArrow
-          ? IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left))
+          ? IconButton(
+            onPressed: () => Get.back(), 
+            icon: const Icon(
+              LineAwesomeIcons.angle_left, 
+              color: Colors.white,
+              ))
           : null,
       title: Text(
         title,

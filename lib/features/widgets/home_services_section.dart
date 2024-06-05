@@ -3,12 +3,44 @@ import 'service_box.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 
 class ServicesSection extends StatefulWidget {
+  const ServicesSection({super.key});
+
   @override
   _ServicesSectionState createState() => _ServicesSectionState();
 }
 
-class _ServicesSectionState extends State<ServicesSection> {
-  int _expandedIndex = -1; // Track the index of the currently expanded box
+class _ServicesSectionState extends State<ServicesSection> with SingleTickerProviderStateMixin {
+  int _expandedIndex = -1;
+  late AnimationController _scaleController; // Now without initialization
+  late Animation<double> _scaleAnimation;
+
+  Animation<double> getScaleAnimation() {
+  return Tween<double>(begin: 1.0, end: 1.09).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeInOut));
+}
+
+
+  @override
+  void initState() {
+    super.initState();
+    _scaleController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000))..repeat();
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.02)
+    .animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeInOut))
+    ..addListener(() => setState(() {}));
+    _scaleController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _scaleController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _scaleController.forward();
+      }
+    });
+    _scaleController.forward();
+  }
+
+  @override
+  void dispose() {
+    _scaleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +74,7 @@ class _ServicesSectionState extends State<ServicesSection> {
             onPressed: () {
               // Add your action here
             },
-            style: buttonStyle, // You can define buttonStyle if you want
+            style: buttonStyle,
             child: const Text('Explore Spaces'),
           ),
           ServiceBox(
@@ -55,6 +87,7 @@ class _ServicesSectionState extends State<ServicesSection> {
                 _expandedIndex = _expandedIndex == 0 ? -1 : 0;
               });
             },
+            scaleAnimation: getScaleAnimation(),
           ),
           ServiceBox(
             iconData: Icons.local_cafe,
@@ -66,6 +99,7 @@ class _ServicesSectionState extends State<ServicesSection> {
                 _expandedIndex = _expandedIndex == 1 ? -1 : 1;
               });
             },
+            scaleAnimation: getScaleAnimation(),
           ),
           ServiceBox(
             iconData: Icons.tv,
@@ -77,6 +111,7 @@ class _ServicesSectionState extends State<ServicesSection> {
                 _expandedIndex = _expandedIndex == 2 ? -1 : 2;
               });
             },
+            scaleAnimation: getScaleAnimation(),
           ),
         ],
       ),

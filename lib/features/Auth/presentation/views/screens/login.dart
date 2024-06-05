@@ -6,6 +6,8 @@ import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final viewModel = LoginViewModel();

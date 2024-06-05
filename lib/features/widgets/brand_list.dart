@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class BrandList extends StatefulWidget {
+  const BrandList({super.key});
+
   @override
   _BrandListState createState() => _BrandListState();
 }
@@ -64,7 +66,7 @@ class _BrandListState extends State<BrandList> {
 class BrandItem extends StatelessWidget {
   final String imageUrl;
 
-  BrandItem({required this.imageUrl});
+  const BrandItem({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

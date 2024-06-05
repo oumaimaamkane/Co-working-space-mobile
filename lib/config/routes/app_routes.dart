@@ -19,11 +19,11 @@ class AppRoutes {
   static const String updateProfile = '/updateProfile';
 
   static final pages = [
-    GetPage(name: home, page: () => HomeScreen()),
-    GetPage(name: contact, page: () => ContactScreen()),
-    GetPage(name: login, page: () => LoginScreen()),
-    GetPage(name: register, page: () => SignUpScreen()),
-    GetPage(name: dashmin, page: () => DashminScreen()),
+    GetPage(name: home, page: () => const HomeScreen()),
+    GetPage(name: contact, page: () => const ContactScreen()),
+    GetPage(name: login, page: () => const LoginScreen()),
+    GetPage(name: register, page: () => const SignUpScreen()),
+    GetPage(name: dashmin, page: () => const DashminScreen()),
     GetPage(name: clientProfile, page: () => const ProfileScreen()),
     GetPage(name: updateProfile, page: () => const UpdateProfileScreen()),
   ];

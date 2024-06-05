@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 
 class BenefitsSection extends StatelessWidget {
+  const BenefitsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +45,7 @@ class BenefitsSection extends StatelessWidget {
             style: TextStyle(fontSize: 16.0),
           ),
           const SizedBox(height: 16.0),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BenefitItem(
@@ -74,7 +76,7 @@ class BenefitItem extends StatelessWidget {
   final String number;
   final String text;
 
-  BenefitItem({required this.number, required this.text});
+  const BenefitItem({super.key, required this.number, required this.text});
 
   @override
   Widget build(BuildContext context) {

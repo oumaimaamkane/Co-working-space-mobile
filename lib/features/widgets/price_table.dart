@@ -8,13 +8,14 @@ class PriceTable extends StatelessWidget {
   final List<String> features;
   final String? ribbon;
 
-  PriceTable({
+  const PriceTable({
+    Key? key,
     required this.title,
     required this.price,
     required this.description,
     required this.features,
     this.ribbon,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class PriceTable extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        border: Border.all(color: borderColor), // Set border color based on ribbon
+        border: Border.all(color: borderColor),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
@@ -33,7 +34,8 @@ class PriceTable extends StatelessWidget {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(4.0),
@@ -46,7 +48,10 @@ class PriceTable extends StatelessWidget {
             ),
           Text(
             title,
-            style: const TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -59,25 +64,33 @@ class PriceTable extends StatelessWidget {
             style: const TextStyle(fontSize: 16.0, color: Colors.white),
           ),
           const SizedBox(height: 8.0),
-          ...features.map((feature) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.check, color: Colors.green),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                        child: Text(
-                      feature,
-                      style: const TextStyle(color: Colors.white),
-                    )),
-                  ],
-                ),
-              )),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: features
+                  .map((feature) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.check, color: Colors.green),
+                            const SizedBox(width: 8.0),
+                            Expanded(
+                              child: Text(
+                                feature,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ),
           const SizedBox(height: 16.0),
           Center(
             child: ElevatedButton(
-              style: buttonStyle,
               onPressed: () {},
+              style: buttonStyle,
               child: const Text("Join Now"),
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BouncingPreloader extends StatefulWidget {
-  const BouncingPreloader({Key? key}) : super(key: key);
+  const BouncingPreloader({super.key});
 
   @override
   _BouncingPreloaderState createState() => _BouncingPreloaderState();

@@ -8,12 +8,12 @@ class AnimatedInputField extends StatefulWidget {
   final int maxLines;
 
   const AnimatedInputField({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.onSaved,
     this.validator,
     this.maxLines = 1,
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedInputFieldState createState() => _AnimatedInputFieldState();
@@ -88,6 +88,8 @@ class _AnimatedInputFieldState extends State<AnimatedInputField> with SingleTick
 }
 
 class ContactForm extends StatefulWidget {
+  const ContactForm({super.key});
+
   @override
   _ContactFormState createState() => _ContactFormState();
 }

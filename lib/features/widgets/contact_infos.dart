@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 
 
 class ContactInfo extends StatelessWidget {
+  const ContactInfo({super.key});
+
   // final MapController _controller = MapController(
   //   location: LatLng(0, 0), // Example coordinates for Detroit
   //   zoom: 15,

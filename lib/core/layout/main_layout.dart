@@ -7,7 +7,7 @@ import 'package:coworking_space_mobile/features/contact.dart';
 class MainLayout extends StatefulWidget {
   final String title;
 
-  const MainLayout({
+  const MainLayout({super.key, 
     required this.title,
   });
 
@@ -19,8 +19,8 @@ class _MainLayoutState extends State<MainLayout> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    HomeScreen(),
-    ContactScreen(),
+    const HomeScreen(),
+    const ContactScreen(),
   ];
 
   @override

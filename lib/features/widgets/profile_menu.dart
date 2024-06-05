@@ -8,13 +8,13 @@ class ProfileMenuWidget extends StatelessWidget {
   final bool endIcon;
 
   const ProfileMenuWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.onPress,
     this.textColor,
     this.endIcon = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

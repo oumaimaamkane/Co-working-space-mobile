@@ -11,6 +11,8 @@ import 'widgets/event_host_section.dart';
 import 'widgets/contact_section.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -80,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             currentPageIndex: _currentPageIndex,
           ),
           const SizedBox(height: 24),
-          AboutUsSection(),
+          const AboutUsSection(),
           const SizedBox(height: 24),
           PlayVideoSection(
             onVideoPlay: () {
@@ -89,17 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           const SizedBox(height: 24),
-          ServicesSection(),
+          const ServicesSection(),
           const SizedBox(height: 24),
-          MembershipSection(),
+          const MembershipSection(),
           const SizedBox(height: 24),
-          BenefitsSection(),
+          const BenefitsSection(),
           const SizedBox(height: 24),
-          BrandList(),
+          const BrandList(),
           const SizedBox(height: 24),
-          EventHostSection(),
+          const EventHostSection(),
           const SizedBox(height: 24),
-          ContactSection(),
+          const ContactSection(),
         ],
       ),
     );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 
 class EventHostSection extends StatelessWidget {
+  const EventHostSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -3,18 +3,20 @@ import 'package:coworking_space_mobile/features/widgets/contact_form.dart';
 import 'package:coworking_space_mobile/features/widgets/contact_infos.dart';
 
 class ContactSection extends StatelessWidget {
+  const ContactSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20.0),
-      child: Column(
+      child: const Column(
         children: [
           Align(
             alignment: Alignment.center,
             child: ContactInfo(),
           ),
-          const SizedBox(height: 40.0),
-          const Text(
+          SizedBox(height: 40.0),
+          Text(
             'Request for Call Back',
             style: TextStyle(
               color: Colors.grey,
@@ -22,8 +24,8 @@ class ContactSection extends StatelessWidget {
               height: 1.5,
             ),
           ),
-          const SizedBox(height: 10.0),
-          const Text(
+          SizedBox(height: 10.0),
+          Text(
             'We\'re always ready to discuss cooperation',
             style: TextStyle(
               color: Color(0xFF1E3954),
@@ -31,8 +33,8 @@ class ContactSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 40.0),
-          const Text(
+          SizedBox(height: 40.0),
+          Text(
             'I would like to discuss:',
             style: TextStyle(
               color: Color(0xFF1E3954),
@@ -40,7 +42,7 @@ class ContactSection extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20.0),
+          SizedBox(height: 20.0),
           ContactForm(),
         ],
       ),

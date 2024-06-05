@@ -9,17 +9,17 @@ class CarouselSlider extends StatelessWidget {
   final int currentPageIndex; // Add this line
 
   const CarouselSlider({
-    Key? key,
+    super.key,
     required this.imageUrls,
     required this.titles,
     required this.descriptions,
     required this.onPageChanged,
     required this.currentPageIndex, // Add this line
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200, // Adjust the height to make the hero section smaller
       child: PageView.builder(
         itemCount: imageUrls.length,
