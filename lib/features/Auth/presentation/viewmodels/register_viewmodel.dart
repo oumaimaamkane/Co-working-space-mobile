@@ -7,6 +7,7 @@ import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class SignUpViewModel extends GetxController {
+  final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();

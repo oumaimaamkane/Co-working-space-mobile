@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
+import 'package:get/get.dart';
 
-class LoginViewModel {
+class LoginViewModel extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -25,7 +26,8 @@ class LoginViewModel {
           Navigator.pushReplacementNamed(context, AppRoutes.dashmin);
         } else if (role == 'user') {
           Navigator.pushReplacementNamed(context, AppRoutes.clientProfile);
-        } else {
+        } 
+        else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Unknown role')));
         }
       } catch (e) {
@@ -35,8 +37,10 @@ class LoginViewModel {
     }
   }
 
+  @override
   void dispose() {
     emailController.dispose();
     passController.dispose();
+    super.dispose();
   }
 }

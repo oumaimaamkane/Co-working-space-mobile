@@ -12,269 +12,234 @@ class SignUpScreen extends StatelessWidget {
     return GetBuilder<SignUpViewModel>(
       init: SignUpViewModel(),
       builder: (viewModel) {
-        return Scaffold(
-          appBar: viewModel.isLoading
-              ? null
-              : AppBar(
-                  leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
-                  backgroundColor: Colors.white,
-                  iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
-                  // leading: IconButton(
-                  //   icon: const Icon(Icons.arrow_back),
-                  //   onPressed: () {
-                  //     Navigator.pop(context);
-                  //   },
-                  // ),
-                ),
-          backgroundColor: Colors.white,
-          body: viewModel.isLoading
-              ? Container(
-                  color: const Color.fromARGB(255, 90, 90, 90),
-                  child: const Center(child: BouncingPreloader()),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0),
-                        child: Image.asset(
-                          "images/vector-2.png",
-                          width: 428,
-                          height: 457,
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            appBar: viewModel.isLoading
+                ? null
+                : AppBar(
+                    leading: IconButton(
+                        onPressed: () => Get.back(),
+                        icon: const Icon(LineAwesomeIcons.angle_left)),
+                    backgroundColor: Colors.white,
+                    iconTheme: const IconThemeData(
+                        color: Color.fromARGB(255, 82, 197, 181)),
+                  ),
+            body: viewModel.isLoading
+                ? Container(
+                    color: const Color.fromARGB(255, 90, 90, 90),
+                    child: const Center(child: BouncingPreloader()),
+                  )
+                : SingleChildScrollView(
+                    child: Form(
+                      key: viewModel
+                          .formKey, // Add form key to access the form state
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        height: MediaQuery.of(context).size.height - 50,
+                        width: double.infinity,
                         child: Column(
-                          textDirection: TextDirection.ltr,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Sign up',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 82, 197, 181),
-                                fontSize: 27,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                const SizedBox(height: 60.0),
+                                const Text(
+                                  "Sign up",
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Create your account",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: <Widget>[
+                                TextFormField(
+                                  controller: viewModel.nameController,
+                                  decoration: InputDecoration(
+                                    hintText: "Username",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    fillColor: Colors.teal.withOpacity(0.1),
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.person),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                TextFormField(
+                                  controller: viewModel.emailController,
+                                  decoration: InputDecoration(
+                                    hintText: "Email",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    fillColor: Colors.teal.withOpacity(0.1),
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.email),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                TextFormField(
+                                  controller: viewModel.passController,
+                                  decoration: InputDecoration(
+                                    hintText: "Password",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    fillColor: Colors.teal.withOpacity(0.1),
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.password),
+                                  ),
+                                  obscureText: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a password';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                TextFormField(
+                                  controller: viewModel.repassController,
+                                  decoration: InputDecoration(
+                                    hintText: "Confirm Password",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    fillColor: Colors.teal.withOpacity(0.1),
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.password),
+                                  ),
+                                  obscureText: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please confirm your password';
+                                    }
+                                    if (value !=
+                                        viewModel.passController.text) {
+                                      return 'Passwords do not match';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(top: 3, left: 3),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (viewModel.formKey.currentState != null &&
+                                      viewModel.formKey.currentState!
+                                          .validate()) {
+                                    viewModel.register(context);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: const StadiumBorder(),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 0, 0, 0),
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text(
+                                  "Sign up",
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 40),
-                            SizedBox(
-                              height: 56,
-                              child: TextField(
-                                controller: viewModel.nameController,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFF393939),
-                                  fontSize: 13,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
+                            const Center(child: Text("Or")),
+                            Container(
+                              height: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: Colors.teal,
                                 ),
-                                decoration: const InputDecoration(
-                                  labelText: 'Name',
-                                  labelStyle: TextStyle(
-                                    color: Color.fromARGB(255, 82, 197, 181),
-                                    fontSize: 15,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(
+                                        0, 1), // changes position of shadow
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color.fromARGB(255, 63, 126, 118),
+                                ],
+                              ),
+                              child: TextButton(
+                                onPressed: () {},
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 30.0,
+                                      width: 30.0,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/login_signup/google.png'),
+                                            fit: BoxFit.cover),
+                                        shape: BoxShape.circle,
+                                      ),
                                     ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color.fromARGB(255, 82, 197, 181),
+                                    const SizedBox(width: 18),
+                                    const Text(
+                                      "Sign In with Google",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.teal,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 17),
-                            SizedBox(
-                              height: 56,
-                              child: TextField(
-                                controller: viewModel.emailController,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFF393939),
-                                  fontSize: 13,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                decoration: const InputDecoration(
-                                  labelText: 'Email',
-                                  labelStyle: TextStyle(
-                                    color: Color.fromARGB(255, 82, 197, 181),
-                                    fontSize: 15,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color.fromARGB(255, 63, 126, 118),
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color.fromARGB(255, 82, 197, 181),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 17),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 147,
-                                  height: 56,
-                                  child: TextField(
-                                    controller: viewModel.passController,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Color(0xFF393939),
-                                      fontSize: 13,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      labelText: 'Password',
-                                      hintText: 'Create Password',
-                                      hintStyle: TextStyle(
-                                        color: Color.fromARGB(255, 63, 126, 118),
-                                        fontSize: 10,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      labelStyle: TextStyle(
-                                        color: Color.fromARGB(255, 82, 197, 181),
-                                        fontSize: 15,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        borderSide: BorderSide(
-                                          width: 1,
-                                          color: Color.fromARGB(255, 63, 126, 118),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        borderSide: BorderSide(
-                                          width: 1,
-                                          color: Color.fromARGB(255, 82, 197, 181),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 147,
-                                  height: 56,
-                                  child: TextField(
-                                    controller: viewModel.repassController,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Color(0xFF393939),
-                                      fontSize: 13,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      labelText: 'Confirm Password',
-                                      hintText: 'Confirm Password',
-                                      hintStyle: TextStyle(
-                                        color: Color.fromARGB(255, 63, 126, 118),
-                                        fontSize: 10,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      labelStyle: TextStyle(
-                                        color: Color.fromARGB(255, 82, 197, 181),
-                                        fontSize: 15,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        borderSide: BorderSide(
-                                          width: 1,
-                                          color: Color.fromARGB(255, 63, 126, 118),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        borderSide: BorderSide(
-                                          width: 1,
-                                          color: Color.fromARGB(255, 82, 197, 181),
-                                        ),
-                                      ),
-                                    ),
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const Text("Already have an account?"),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.back(); // Add appropriate navigation
+                                  },
+                                  child: const Text(
+                                    "Login",
+                                    style: TextStyle(color: Colors.teal),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 48),
-                            Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: 137,
-                                height: 47,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewModel.register(context);
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        WidgetStateProperty.resolveWith<Color>(
-                                      (Set<WidgetState> states) {
-                                        if (states
-                                            .contains(WidgetState.disabled)) {
-                                          return Colors.grey; // Disabled color
-                                        }
-                                        return const Color.fromARGB(
-                                            255, 82, 197, 181); // Enabled color
-                                      },
-                                    ),
-                                    shape: WidgetStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 30),
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+          ),
         );
       },
     );

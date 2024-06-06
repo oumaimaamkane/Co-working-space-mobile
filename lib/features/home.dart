@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           // const SizedBox(height: 4),
           const coPlaceSearchBar(),
-          const SizedBox(height: 24),
+          // const SizedBox(height: 14),
           const AboutUsSection(),
           const SizedBox(height: 24),
           PlayVideoSection(
