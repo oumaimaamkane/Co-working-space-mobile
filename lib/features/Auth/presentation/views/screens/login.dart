@@ -39,14 +39,17 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _forgotPassword(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      child: const Text(
-        "Forgot password?",
-        style: TextStyle(color: Colors.teal),
-      ),
-    );
-  }
+  return TextButton(
+    onPressed: () {
+      Get.toNamed(AppRoutes.forgotPassword);
+    },
+    child: const Text(
+      "Forgot password?",
+      style: TextStyle(color: Colors.teal),
+    ),
+  );
+}
+
 
   Widget _signup(BuildContext context) {
     return Row(
