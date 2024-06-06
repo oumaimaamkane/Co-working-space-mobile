@@ -5,10 +5,12 @@ import 'package:coworking_space_mobile/features/constants.dart';
 import 'package:coworking_space_mobile/features/widgets/profile_menu.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/core/layout/app_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/viewmodels/profile_viewmodel.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileView extends StatelessWidget {
+  final ProfileViewModel viewModel = ProfileViewModel();
+
+  ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,27 +113,7 @@ class ProfileScreen extends StatelessWidget {
                 textColor: Colors.red,
                 endIcon: false,
                 onPress: () {
-                  // Show a confirmation dialog
-                  Get.defaultDialog(
-                    title: "LOGOUT",
-                    titleStyle: const TextStyle(fontSize: 20),
-                    content: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15.0),
-                      child: Text("Are you sure you want to logout?"),
-                    ),
-                    confirm: ElevatedButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        Get.back(); // Go back from confirmation dialog
-                        Get.back(); // Go back to MainLayout
-                      },
-                      child: const Text("Yes"),
-                    ),
-                    cancel: OutlinedButton(
-                      onPressed: () => Get.back(),
-                      child: const Text("No"),
-                    ),
-                  );
+                  viewModel.logout();
                 },
               ),
             ],

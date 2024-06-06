@@ -8,8 +8,7 @@ class BenefitsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 706.4,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      margin: const EdgeInsets.only(left: 98.2),
+      padding: const EdgeInsets.symmetric(horizontal: 36.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

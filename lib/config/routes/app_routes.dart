@@ -4,8 +4,8 @@ import 'package:coworking_space_mobile/features/contact.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/login.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/register.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/dashmin.dart';
-import 'package:coworking_space_mobile/features/Client/presentation/views/screens/profile.dart';
-import 'package:coworking_space_mobile/features/Client/presentation/views/screens/update_profile_screen.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/profile_view.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/update_profile_view.dart';
 
 class AppRoutes {
   static const String home = '/home';
@@ -24,7 +24,7 @@ class AppRoutes {
     GetPage(name: login, page: () => const LoginScreen()),
     GetPage(name: register, page: () => const SignUpScreen()),
     GetPage(name: dashmin, page: () => const DashminScreen()),
-    GetPage(name: clientProfile, page: () => const ProfileScreen()),
-    GetPage(name: updateProfile, page: () => const UpdateProfileScreen()),
+    GetPage(name: clientProfile, page: () => ProfileView()),
+    GetPage(name: updateProfile, page: () => UpdateProfileView()),
   ];
 }

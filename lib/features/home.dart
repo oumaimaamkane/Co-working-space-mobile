@@ -9,6 +9,7 @@ import 'widgets/home_benefits_section.dart';
 import 'widgets/brand_list.dart';
 import 'widgets/event_host_section.dart';
 import 'widgets/contact_section.dart';
+import 'widgets/co_place_searchbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -81,6 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             currentPageIndex: _currentPageIndex,
           ),
+          // const SizedBox(height: 4),
+          const coPlaceSearchBar(),
           const SizedBox(height: 24),
           const AboutUsSection(),
           const SizedBox(height: 24),
