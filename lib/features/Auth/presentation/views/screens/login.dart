@@ -17,7 +17,8 @@ class LoginScreen extends StatelessWidget {
             icon: const Icon(LineAwesomeIcons.angle_left),
           ),
           backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
+          iconTheme:
+              const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
         ),
         body: Form(
           key: viewModel.formKey,
@@ -29,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 const _Header(),
                 _InputField(viewModel),
                 _forgotPassword(context),
-                _signup(context),
+                _signup(context, viewModel),
               ],
             ),
           ),
@@ -39,31 +40,34 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _forgotPassword(BuildContext context) {
-  return TextButton(
-    onPressed: () {
-      Get.toNamed(AppRoutes.forgotPassword);
-    },
-    child: const Text(
-      "Forgot password?",
-      style: TextStyle(color: Colors.teal),
-    ),
-  );
-}
+    return TextButton(
+      onPressed: () {
+        Get.toNamed(AppRoutes.forgotPassword);
+      },
+      child: const Text(
+        "Forgot password?",
+        style: TextStyle(color: Colors.teal),
+      ),
+    );
+  }
 
-
-  Widget _signup(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+  Widget _signup(BuildContext context, LoginViewModel viewModel) {
+    return Column(
       children: [
-        const Text("Don’t have an account? "),
-        TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, AppRoutes.register);
-          },
-          child: const Text(
-            "Sign Up",
-            style: TextStyle(color: Colors.teal),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Don’t have an account? "),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.register);
+              },
+              child: const Text(
+                "Sign Up",
+                style: TextStyle(color: Colors.teal),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -110,7 +114,9 @@ class _InputField extends StatelessWidget {
             prefixIcon: const Icon(Icons.email),
           ),
           validator: (value) {
-            if (value == null || value.isEmpty || !EmailValidator.validate(value)) {
+            if (value == null ||
+                value.isEmpty ||
+                !EmailValidator.validate(value)) {
               return 'Please enter a valid email address';
             }
             return null;
@@ -157,8 +163,55 @@ class _InputField extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
         ),
+        const SizedBox(height: 15),
+        const Center(child: Text("Or")),
+        const SizedBox(height: 15),
+        Container(
+          height: 45,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+              color: Colors.teal,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.white.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: const Offset(0, 1), // changes position of shadow
+              ),
+            ],
+          ),
+          child: TextButton(
+            onPressed:
+                viewModel.signInWithGoogle, // Call signInWithGoogle method
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 30.0,
+                  width: 30.0,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/login_signup/google.png'),
+                        fit: BoxFit.cover),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 18),
+                const Text(
+                  "Sign In with Google",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.teal,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
 }
-

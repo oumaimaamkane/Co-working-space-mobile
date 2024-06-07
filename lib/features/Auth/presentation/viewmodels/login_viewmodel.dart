@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:get/get.dart';
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/register_viewmodel.dart';
 
 class LoginViewModel extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -35,6 +36,12 @@ class LoginViewModel extends GetxController {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to login: $e')));
       }
     }
+  }
+
+  Future<void> signInWithGoogle() async {
+    // Use the signInWithGoogle method from RegisterViewModel
+    SignUpViewModel registerViewModel = SignUpViewModel();
+    await registerViewModel.signInWithGoogle();
   }
 
   @override

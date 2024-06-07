@@ -12,7 +12,12 @@
           "package_name": "com.afritsy.coworkingapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1067299307317-p91b4cv14lu0ui9p4vrrtgiqqcaamam0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAnT-T5ZwCbwNEMMekCSXqSl7F3crCErKw"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067299307317-p91b4cv14lu0ui9p4vrrtgiqqcaamam0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1067299307317-usb0abionqgs3e5eemoi3cfiiotfc7nd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coworkingSpaceMobile"
+              }
+            }
+          ]
         }
       }
     }

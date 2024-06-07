@@ -1,5 +1,23 @@
 import 'package:flutter/material.dart';
 
+class MainMenuData {
+  final String name;
+  final IconData icon;
+  final String route;
+
+  MainMenuData({
+    required this.name,
+    required this.icon,
+    required this.route,
+  });
+}
+
+List<MainMenuData> listMainMenu = [
+  MainMenuData(name: 'Home', icon: Icons.home, route: '/home'),
+  MainMenuData(name: 'Settings', icon: Icons.settings, route: '/settings'),
+  // Add more menu items as needed
+];
+
 const tProfile = "Profile";
 const tUpdateProfile = "Update Profile";
 const tDefaultSize = 16.0;
@@ -11,8 +29,6 @@ const tEditProfile = "Edit Profile";
 const tDarkColor = Colors.black;
 
 final buttonStyle = ElevatedButton.styleFrom(
-    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-    foregroundColor: Colors.white, 
-  );
-
-  
+  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+  foregroundColor: Colors.white,
+);

@@ -192,7 +192,8 @@ class SignUpScreen extends StatelessWidget {
                                 ],
                               ),
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: viewModel
+                                    .signInWithGoogle, // Call signInWithGoogle method
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
