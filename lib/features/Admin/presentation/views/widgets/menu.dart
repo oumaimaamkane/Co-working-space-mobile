@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
+import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 
 
 // Define the AppColors class
@@ -23,7 +24,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     var route = ModalRoute.of(context);
     List<MainMenuData> listMainMenu = [
-      MainMenuData(name: 'Home', icon: Icons.home, route: '/home'),
+      MainMenuData(name: 'Home', icon: Icons.home, route: AppRoutes.home),
       MainMenuData(name: 'Settings', icon: Icons.settings, route: '/settings'),
       // Add more menu items as needed
     ];
@@ -32,7 +33,7 @@ class Menu extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () => Get.toNamed("/"),
+            onTap: () => Get.toNamed(AppRoutes.home),  // Navigate to home route
             child: Padding(
               padding: const EdgeInsets.all(32),
               child: Icon(
@@ -111,3 +112,4 @@ class Menu extends StatelessWidget {
     );
   }
 }
+
