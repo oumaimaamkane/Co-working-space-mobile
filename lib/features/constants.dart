@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class MainMenuData {
   final String name;
   final IconData icon;
-  final String route;
+  final String? route;
+  final VoidCallback? onTap;
 
   MainMenuData({
     required this.name,
     required this.icon,
-    required this.route,
+    this.route,
+    this.onTap,
   });
 }
 

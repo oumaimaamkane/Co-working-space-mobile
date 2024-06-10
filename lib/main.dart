@@ -19,17 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Coworking Space',
       theme: ThemeData(
         primarySwatch: Colors.teal,
         appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(255, 0, 0, 0),
         ),
       ),
-      home: const MainLayout(
-        title: 'Coworking Space',
-      ),
+      initialRoute: AppRoutes.main,
       getPages: AppRoutes.pages,
+      home: const MainLayout(title: 'Coworking Space'),
     );
   }
 }

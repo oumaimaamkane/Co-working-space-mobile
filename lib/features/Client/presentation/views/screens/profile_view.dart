@@ -113,7 +113,7 @@ class ProfileView extends StatelessWidget {
                 textColor: Colors.red,
                 endIcon: false,
                 onPress: () {
-                  viewModel.logout();
+                  viewModel.logout(context);
                 },
               ),
             ],

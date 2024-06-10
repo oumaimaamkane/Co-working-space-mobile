@@ -9,16 +9,18 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginViewModel>(
-      init: LoginViewModel(), // Initialize the view model
+      init: LoginViewModel(),
       builder: (viewModel) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () {
+              // Prevent back navigation if necessary or customize as per requirement
+              Get.offAllNamed(AppRoutes.main);
+            },
             icon: const Icon(LineAwesomeIcons.angle_left),
           ),
           backgroundColor: Colors.white,
-          iconTheme:
-              const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 82, 197, 181)),
         ),
         body: Form(
           key: viewModel.formKey,
@@ -60,7 +62,7 @@ class LoginScreen extends StatelessWidget {
             const Text("Don’t have an account? "),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.register);
+                Get.toNamed(AppRoutes.register);
               },
               child: const Text(
                 "Sign Up",
@@ -73,6 +75,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+
 
 class _Header extends StatelessWidget {
   const _Header({Key? key}) : super(key: key);
@@ -192,10 +195,10 @@ class _InputField extends StatelessWidget {
                   height: 30.0,
                   width: 30.0,
                   decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image:
-                            AssetImage('assets/images/login_signup/google.png'),
-                        fit: BoxFit.cover),
+                    // image: DecorationImage(
+                    //     image:
+                    //         AssetImage('assets/images/login_signup/google.png'),
+                    //     fit: BoxFit.cover),
                     shape: BoxShape.circle,
                   ),
                 ),

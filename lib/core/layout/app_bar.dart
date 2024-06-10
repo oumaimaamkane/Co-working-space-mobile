@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coworking_space_mobile/config/services/sync_auth.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -9,7 +10,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showPersonIcon;
   final bool showBackArrow;
 
-  const MyAppBar({super.key, 
+  const MyAppBar({
+    super.key,
     required this.title,
     this.showPersonIcon = true,
     this.showBackArrow = true,
@@ -21,10 +23,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: showBackArrow
           ? IconButton(
-            onPressed: () => Get.back(), 
-            icon: const Icon(
-              LineAwesomeIcons.angle_left, 
-              color: Colors.white,
+              onPressed: () => Get.back(),
+              icon: const Icon(
+                LineAwesomeIcons.angle_left,
+                color: Colors.white,
               ))
           : null,
       title: Text(
@@ -43,14 +45,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Color.fromARGB(255, 62, 141, 130),
             ),
             onPressed: () async {
-              // Check if the user is authenticated
               User? user = FirebaseAuth.instance.currentUser;
               if (user != null) {
-                // If authenticated, navigate to the profile screen
-                Navigator.pushNamed(context, AppRoutes.clientProfile);
+                String role = await SyncAuth().getUserRole(user.uid);
+                if (role == 'user') {
+                  Get.toNamed(AppRoutes.clientProfile);
+                } else if (role == 'admin') {
+                  Get.toNamed(AppRoutes.dashmin);
+                }
               } else {
-                // If not authenticated, navigate to the login screen
-                Navigator.pushNamed(context, AppRoutes.login);
+                Get.toNamed(AppRoutes.login);
               }
             },
           ),
@@ -61,4 +65,3 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-

@@ -7,9 +7,7 @@ import 'package:coworking_space_mobile/features/contact.dart';
 class MainLayout extends StatefulWidget {
   final String title;
 
-  const MainLayout({super.key, 
-    required this.title,
-  });
+  const MainLayout({super.key, required this.title});
 
   @override
   _MainLayoutState createState() => _MainLayoutState();
@@ -28,9 +26,9 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       appBar: MyAppBar(
         title: widget.title,
-        showBackArrow: false, // Don't show the back arrow icon
+        showBackArrow: false,
       ),
-      body: _screens[_selectedIndex], // Use the selected screen
+      body: _screens[_selectedIndex],
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }

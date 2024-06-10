@@ -50,9 +50,9 @@ class _RailState extends State<Rail> {
                 ),
               ),
             ),
-            onDestinationSelected: (value) {
-              Get.toNamed(listMainMenu[value].route);
-            },
+            // onDestinationSelected: (value) {
+            //   Get.toNamed(listMainMenu[value].route);
+            // },
             destinations: listRails,
           ),
         ),
