@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/dashmin_viewmodel.dart';
 
@@ -37,11 +37,21 @@ class Menu extends StatelessWidget {
                       onTap: () => viewModel.navigateTo(context, AppRoutes.main),
                     ),
                     ListTile(
+                      leading: const Icon(Icons.dashboard),
+                      title: const Text('Dashboard'),
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.dashmin),
+                    ),
+                    ListTile(
                       leading: const Icon(Icons.settings),
                       title: const Text('Settings'),
                       onTap: () {
                         // Add your settings logic here
                       },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.devices),
+                      title: const Text('Equipements'),
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.equipements),
                     ),
                     ListTile(
                       leading: const Icon(Icons.logout),

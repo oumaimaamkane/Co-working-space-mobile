@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:coworking_space_mobile/core/layout/main_layout.dart';
 import 'package:coworking_space_mobile/features/home.dart';
 import 'package:coworking_space_mobile/features/contact.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/login.dart';
@@ -7,7 +8,7 @@ import 'package:coworking_space_mobile/features/Admin/presentation/views/screens
 import 'package:coworking_space_mobile/features/Client/presentation/views/screens/profile_view.dart';
 import 'package:coworking_space_mobile/features/Client/presentation/views/screens/update_profile_view.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/forgot_password.dart';
-import 'package:coworking_space_mobile/core/layout/main_layout.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/equipements.dart';
 
 class AppRoutes {
   static const String main = '/main';
@@ -22,6 +23,7 @@ class AppRoutes {
   static const String resetPassInstructions = "/reset-instructions";
   static const String dashmin = '/dashmin';
   static const String updateProfile = '/updateProfile';
+  static const String equipements = '/equipements';
 
   static final pages = [
     GetPage(name: main, page: () => const MainLayout(title: 'Coworking Space')),
@@ -34,5 +36,6 @@ class AppRoutes {
     GetPage(name: dashmin, page: () => DashminScreen()),
     GetPage(name: clientProfile, page: () => ProfileView()),
     GetPage(name: updateProfile, page: () => UpdateProfileView()),
+    GetPage(name: equipements, page: () => EquipementsScreen()),
   ];
 }

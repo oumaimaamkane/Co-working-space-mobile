@@ -4,10 +4,8 @@ import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/navigate_button.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/card_with_transparent_border.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/subtitle.dart';
-import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/rail.dart';
-import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/menu.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/dashmin_viewmodel.dart';
-
+import 'package:coworking_space_mobile/core/layout/dash_layout.dart';
 
 class DashminScreen extends StatelessWidget {
   final DashminViewModel viewModel = DashminViewModel();
@@ -16,51 +14,10 @@ class DashminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth < 600) {
-          // Display Menu as a drawer for mobile devices
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                'Dashboard',
-                style: TextStyle(color: Colors.white),
-              ),
-              leading: Builder(
-                builder: (context) {
-                  return IconButton(
-                    icon: const Icon(Icons.menu, color: Colors.white),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  );
-                },
-              ),
-            ),
-            drawer: Menu(viewModel: viewModel),
-            body: buildContent(context),
-          );
-        } else {
-          // Display Rail for tablet and larger screens
-          return Scaffold(
-            body: Row(
-              children: [
-                Rail(viewModel: viewModel),
-                Expanded(
-                  child: buildContent(context),
-                ),
-              ],
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  Widget buildContent(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
+    return DashLayout(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -134,6 +91,10 @@ class DashminScreen extends StatelessWidget {
           ],
         ),
       ),
+      ),
     );
   }
 }
+
+
+
