@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/card_announce_medium.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/headline.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/navigate_button.dart';
@@ -7,9 +6,13 @@ import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/subtitle.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/rail.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/menu.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/dashmin_viewmodel.dart';
+
 
 class DashminScreen extends StatelessWidget {
-  const DashminScreen({Key? key}) : super(key: key);
+  final DashminViewModel viewModel = DashminViewModel();
+
+  DashminScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +24,12 @@ class DashminScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text(
                 'Dashboard',
-                style: TextStyle(color: Colors.white),),
+                style: TextStyle(color: Colors.white),
+              ),
               leading: Builder(
                 builder: (context) {
                   return IconButton(
-                    icon: const Icon(Icons.menu, color: Colors.white,),
+                    icon: const Icon(Icons.menu, color: Colors.white),
                     onPressed: () {
                       Scaffold.of(context).openDrawer();
                     },
@@ -33,7 +37,7 @@ class DashminScreen extends StatelessWidget {
                 },
               ),
             ),
-            drawer: const Menu(),
+            drawer: Menu(viewModel: viewModel),
             body: buildContent(context),
           );
         } else {
@@ -41,7 +45,7 @@ class DashminScreen extends StatelessWidget {
           return Scaffold(
             body: Row(
               children: [
-                const Rail(),
+                Rail(viewModel: viewModel),
                 Expanded(
                   child: buildContent(context),
                 ),
@@ -67,22 +71,35 @@ class DashminScreen extends StatelessWidget {
               caption: "Un bref aperçu de l'etat du systeme",
             ),
             const SizedBox(height: 32),
-            SizedBox(
-              height: 214,
-              child: ListView.separated(
-                itemCount: 12,
-                shrinkWrap: true,
-                primary: false,
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(width: 16),
-                itemBuilder: (context, index) => const CardAnnounceMedium(
-                  iconData: Icons.stars,
-                  title: "La meilleure information ici!",
-                  subtitle:
-                      "Cette card est faite pour placer des annonces important pour le systeme.",
-                ),
-              ),
+            FutureBuilder<List<String>>(
+              future: viewModel.getDashboardData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return const Center(child: Text('Error loading data'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No data available'));
+                } else {
+                  return SizedBox(
+                    height: 214,
+                    child: ListView.separated(
+                      itemCount: snapshot.data!.length,
+                      shrinkWrap: true,
+                      primary: false,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const SizedBox(width: 16),
+                      itemBuilder: (context, index) => const CardAnnounceMedium(
+                        iconData: Icons.stars,
+                        title: "La meilleure information ici!",
+                        subtitle:
+                            "Cette card est faite pour placer des annonces important pour le systeme.",
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
             const SizedBox(height: 32),
             Row(
@@ -90,7 +107,7 @@ class DashminScreen extends StatelessWidget {
                 const Subtitle(title: "Section"),
                 const Spacer(),
                 NavigateButton(
-                  onTap: () {},
+                  onTap: () => viewModel.navigateTo(context, '/details'),
                   title: "Voir plus",
                   iconData: Icons.arrow_forward,
                 ),
@@ -120,4 +137,3 @@ class DashminScreen extends StatelessWidget {
     );
   }
 }
-

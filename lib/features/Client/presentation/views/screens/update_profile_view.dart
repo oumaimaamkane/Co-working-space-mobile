@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:coworking_space_mobile/core/layout/app_bar.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 import 'package:coworking_space_mobile/core/models/user_model.dart';
 import 'package:coworking_space_mobile/features/Client/presentation/viewmodels/update_profile_viewmodel.dart';
+import 'package:coworking_space_mobile/config/services/user_infos.dart'; // Import UserInfos service file
+import 'package:coworking_space_mobile/config/routes/app_routes.dart';
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
+
 
 class UpdateProfileView extends StatelessWidget {
-  final String? name;
-  final String? phone;
   final UpdateProfileViewModel _viewModel = UpdateProfileViewModel();
+  final UserInfos _userInfos = UserInfos();
+  final LoginViewModel _loginViewModel = Get.find<LoginViewModel>(); // Get the LoginViewModel
 
-  UpdateProfileView({Key? key, this.name, this.phone}) : super(key: key);
+  UpdateProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController(text: name);
-    TextEditingController phoneController = TextEditingController(text: phone);
+    final UserModel userModel = Get.arguments as UserModel;
+    TextEditingController nameController =
+        TextEditingController(text: userModel.name);
+    TextEditingController phoneController =
+        TextEditingController(text: userModel.phone);
 
     return Scaffold(
       appBar: const MyAppBar(
@@ -45,14 +53,25 @@ class UpdateProfileView extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+                // Get the userId using UserInfos
+                String userId = _userInfos.getUserId();
+
+                // Update the user's profile data in Firebase
                 await _viewModel.updateProfile(
                   UserModel(
                     name: nameController.text,
-                    email: 'email@example.com', // You can add email if needed
-                    password: 'password', // You can add password if needed
+                    email: userModel.email, // Use the existing email
+                    password: userModel.password,
+                    phone: phoneController.text,
                   ),
+                  userId, // Pass the userId here
                 );
-                Navigator.of(context).pop(); // Navigate back to the previous screen
+
+                // Update the userName in LoginViewModel
+                _loginViewModel.userName.value = nameController.text;
+
+                // Navigate back to the ProfileView
+                Get.offNamed(AppRoutes.clientProfile);
               },
               style: buttonStyle,
               child: const Text('Update Profile'),
@@ -63,3 +82,4 @@ class UpdateProfileView extends StatelessWidget {
     );
   }
 }
+

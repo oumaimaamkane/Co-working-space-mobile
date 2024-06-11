@@ -9,6 +9,7 @@ import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 
 class SyncAuth {
   static const String serverUrl = 'http://127.0.0.1:8000/api';
+  static bool isLoggedOut = false;
 
   static Future<void> syncUserToMySQL(String name, String email, String password) async {
     try {
@@ -45,58 +46,66 @@ class SyncAuth {
   }
 
   bool isAuthenticated() {
-    // Check if the user is authenticated (e.g., check if FirebaseAuth.instance.currentUser is not null)
     User? user = FirebaseAuth.instance.currentUser;
-    return user != null;
+    return user != null && !isLoggedOut;
   }
 
-  // static Future<void> logout(BuildContext context) async {
-  //   await Get.dialog(
-  //     AlertDialog(
-  //       title: const Text('Logout'),
-  //       content: const Text('Are you sure you want to logout?'),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () {
-  //             Get.back(); // Close the dialog
-  //           },
-  //           child: const Text('Cancel'),
-  //         ),
-  //         TextButton(
-  //           onPressed: () async {
-  //             // Perform the logout logic here
-  //             Get.back(); // Close the dialog
-  //             Get.offAllNamed('/main'); // Redirect to main screen
-  //           },
-  //           child: const Text('Logout'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  static Future<void> logout(BuildContext context) async {
-    print("Logout method called");
-  return Get.defaultDialog(
+  static Future<bool> logout(BuildContext context) async {
+  var result = await Get.defaultDialog(
     title: "Logout",
     middleText: "Are you sure you want to logout?",
     actions: [
       TextButton(
-        onPressed: () async {
-          await FirebaseAuth.instance.signOut();
-          Get.offAllNamed(AppRoutes.main); // Navigate to main screen
-        },
-        child: const Text("Yes"),
-      ),
-      TextButton(
         onPressed: () {
-          Get.back(); // Dismiss the dialog
+          Get.back(result: false); // Dismiss the dialog with result = false
         },
         child: const Text("No"),
       ),
+      TextButton(
+        onPressed: () {
+          Get.back(result: true); // Dismiss the dialog with result = true
+        },
+        child: const Text("Yes"),
+      ),
     ],
   );
+
+  if (result != null && result) {
+    // Logout the user only if result is true (i.e., the user confirmed the logout)
+    await FirebaseAuth.instance.signOut();
+    isLoggedOut = true; // Update the isLoggedOut flag
+    Get.offAllNamed(AppRoutes.login); // Navigate to the login screen
+  }
+
+  return result ?? false; // Return false if result is null
 }
+
+
+
+
+
+//   static Future<void> logout(BuildContext context) async {
+//     print("Logout method called");
+//   return Get.defaultDialog(
+//     title: "Logout",
+//     middleText: "Are you sure you want to logout?",
+//     actions: [
+//       TextButton(
+//         onPressed: () async {
+//           await FirebaseAuth.instance.signOut();
+//           Get.offAllNamed(AppRoutes.main); // Navigate to main screen
+//         },
+//         child: const Text("Yes"),
+//       ),
+//       TextButton(
+//         onPressed: () {
+//           Get.back(); // Dismiss the dialog
+//         },
+//         child: const Text("No"),
+//       ),
+//     ],
+//   );
+// }
 
 
 }

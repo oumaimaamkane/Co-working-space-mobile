@@ -6,9 +6,12 @@ import 'package:coworking_space_mobile/features/widgets/profile_menu.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/core/layout/app_bar.dart';
 import 'package:coworking_space_mobile/features/Client/presentation/viewmodels/profile_viewmodel.dart';
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
+import 'package:coworking_space_mobile/core/models/user_model.dart';
 
 class ProfileView extends StatelessWidget {
   final ProfileViewModel viewModel = ProfileViewModel();
+  final LoginViewModel loginViewModel = Get.find<LoginViewModel>();
 
   ProfileView({Key? key}) : super(key: key);
 
@@ -32,8 +35,9 @@ class ProfileView extends StatelessWidget {
                     width: 120,
                     height: 120,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage(tProfileImage))),
+                      borderRadius: BorderRadius.circular(100),
+                      child: const Image(image: AssetImage(tProfileImage)),
+                    ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -42,8 +46,9 @@ class ProfileView extends StatelessWidget {
                       width: 35,
                       height: 35,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: tPrimaryColor),
+                        borderRadius: BorderRadius.circular(100),
+                        color: tPrimaryColor,
+                      ),
                       child: const Icon(
                         LineAwesomeIcons.alternate_pencil,
                         color: Colors.black,
@@ -54,16 +59,20 @@ class ProfileView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text(
-                tProfileHeading,
+              Obx(() => Text(
+                loginViewModel.userName.value.isNotEmpty
+                    ? loginViewModel.userName.value
+                    : tProfileHeading,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: isDark ? Colors.white : Colors.black,
                 ),
-              ),
+              )),
               Text(
-                tProfileSubHeading,
+                loginViewModel.userMail.value.isNotEmpty
+                    ? loginViewModel.userMail.value
+                    : tProfileSubHeading,
                 style: TextStyle(
                   fontSize: 16,
                   color: isDark ? Colors.white70 : Colors.black87,
@@ -75,14 +84,28 @@ class ProfileView extends StatelessWidget {
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () => Get.toNamed(AppRoutes.updateProfile),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: tPrimaryColor,
-                      side: BorderSide.none,
-                      shape: const StadiumBorder()),
-                  child: const Text(tEditProfile,
-                      style: TextStyle(color: tDarkColor)),
-                ),
+  onPressed: () {
+    var arguments = UserModel(
+      name: loginViewModel.userName.value,
+      email: loginViewModel.userMail.value,
+      password: '', 
+      role: 'user', 
+      phone: loginViewModel.userPhone.value,
+    );
+    Get.toNamed(AppRoutes.updateProfile, arguments: arguments);
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: tPrimaryColor,
+    side: BorderSide.none,
+    shape: const StadiumBorder(),
+  ),
+  child: const Text(
+    tEditProfile,
+    style: TextStyle(color: tDarkColor),
+  ),
+),
+
+
               ),
               const SizedBox(height: 30),
               const Divider(),
@@ -90,23 +113,27 @@ class ProfileView extends StatelessWidget {
 
               /// -- MENU
               ProfileMenuWidget(
-                  title: "Settings",
-                  icon: LineAwesomeIcons.cog,
-                  onPress: () {}),
+                title: "Settings",
+                icon: LineAwesomeIcons.cog,
+                onPress: () {},
+              ),
               ProfileMenuWidget(
-                  title: "Billing Details",
-                  icon: LineAwesomeIcons.wallet,
-                  onPress: () {}),
+                title: "Billing Details",
+                icon: LineAwesomeIcons.wallet,
+                onPress: () {},
+              ),
               ProfileMenuWidget(
-                  title: "User Management",
-                  icon: LineAwesomeIcons.user_check,
-                  onPress: () {}),
+                title: "User Management",
+                icon: LineAwesomeIcons.user_check,
+                onPress: () {},
+              ),
               const Divider(),
               const SizedBox(height: 10),
               ProfileMenuWidget(
-                  title: "Information",
-                  icon: LineAwesomeIcons.info,
-                  onPress: () {}),
+                title: "Information",
+                icon: LineAwesomeIcons.info,
+                onPress: () {},
+              ),
               ProfileMenuWidget(
                 title: "Logout",
                 icon: LineAwesomeIcons.alternate_sign_out,

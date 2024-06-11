@@ -4,12 +4,15 @@ import 'firebase_options.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/core/layout/main_layout.dart';
 import 'package:get/get.dart';
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Initialize LoginViewModel
+  Get.put(LoginViewModel());
   runApp(const MyApp());
 }
 
@@ -31,3 +34,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

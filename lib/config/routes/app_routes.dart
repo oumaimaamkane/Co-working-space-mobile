@@ -31,7 +31,7 @@ class AppRoutes {
     GetPage(name: register, page: () => const SignUpScreen()),
     GetPage(name: forgotPassword, page: () => ForgotPasswordScreen()),
     GetPage(name: resetPassInstructions, page: () => ResetPasswordInstructions()),
-    GetPage(name: dashmin, page: () => const DashminScreen()),
+    GetPage(name: dashmin, page: () => DashminScreen()),
     GetPage(name: clientProfile, page: () => ProfileView()),
     GetPage(name: updateProfile, page: () => UpdateProfileView()),
   ];

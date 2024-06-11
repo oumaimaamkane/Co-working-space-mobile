@@ -3,12 +3,14 @@ class UserModel {
   final String email;
   final String password;
   final String role;
+  final String? phone;
 
   UserModel({
     required this.name,
     required this.email,
     required this.password,
     this.role = 'user',
+    this.phone,
   });
 
   Map<String, dynamic> toMap() {
@@ -17,6 +19,7 @@ class UserModel {
       'email': email,
       'password': password,
       'role': role,
+      'phone': phone,
     };
   }
 }
