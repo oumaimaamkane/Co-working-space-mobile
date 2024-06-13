@@ -9,6 +9,8 @@ import 'package:coworking_space_mobile/features/Client/presentation/views/screen
 import 'package:coworking_space_mobile/features/Client/presentation/views/screens/update_profile_view.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/views/screens/forgot_password.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/equipements.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/space.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/categories.dart';
 
 class AppRoutes {
   static const String main = '/main';
@@ -24,6 +26,8 @@ class AppRoutes {
   static const String dashmin = '/dashmin';
   static const String updateProfile = '/updateProfile';
   static const String equipements = '/equipements';
+  static const String space = '/space';
+  static const String categories = '/categories';
 
   static final pages = [
     GetPage(name: main, page: () => const MainLayout(title: 'Coworking Space')),
@@ -37,5 +41,7 @@ class AppRoutes {
     GetPage(name: clientProfile, page: () => ProfileView()),
     GetPage(name: updateProfile, page: () => UpdateProfileView()),
     GetPage(name: equipements, page: () => EquipementsScreen()),
+    GetPage(name: space, page: () => SpaceScreen()),
+    GetPage(name: categories, page: () => CategoryScreen()),
   ];
 }

@@ -48,6 +48,16 @@ class Menu extends StatelessWidget {
                         // Add your settings logic here
                       },
                     ),
+                     ListTile(
+                      leading: const Icon(Icons.space_dashboard),
+                      title: const Text('Space'), 
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.space),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.category),
+                      title: const Text('Categories'), 
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.categories),
+                    ),
                     ListTile(
                       leading: const Icon(Icons.devices),
                       title: const Text('Equipements'),
