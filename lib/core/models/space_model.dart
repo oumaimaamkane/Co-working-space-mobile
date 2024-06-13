@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Space {
-  final String id; // Add this line
+  final String id;
   final int floor;
   final String description;
   final String status;
@@ -9,6 +9,7 @@ class Space {
   final int capacity;
   final String categoryId;
   final List<String> services;
+  final String imageUrl;
 
   Space({
     required this.id,
@@ -19,6 +20,7 @@ class Space {
     required this.capacity,
     required this.categoryId,
     required this.services,
+    required this.imageUrl,
   });
 
   factory Space.fromDocument(DocumentSnapshot doc) {
@@ -32,6 +34,7 @@ class Space {
       capacity: data['capacity'] ?? 0,
       categoryId: data['category_id'] ?? '',
       services: List<String>.from(data['services'] ?? []),
+      imageUrl: data['image_url'] ?? '',
     );
   }
 
@@ -44,6 +47,7 @@ class Space {
       'capacity': capacity,
       'category_id': categoryId,
       'services': services,
+      'image_url': imageUrl,
     };
   }
 }
