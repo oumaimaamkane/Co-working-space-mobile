@@ -6,13 +6,16 @@ import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/add_space_viewmodel.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/update_space_viewmodel.dart';
 import 'package:coworking_space_mobile/config/services/category_service.dart';
+import 'package:coworking_space_mobile/config/services/service_service.dart';
 import 'package:coworking_space_mobile/core/models/category_model.dart';
+import 'package:coworking_space_mobile/core/models/service_model.dart'; // Make sure Service is imported
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/update_space.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/add_space.dart';
 
 class SpaceScreen extends StatelessWidget {
   final SpaceViewModel viewModel = SpaceViewModel();
   final CategoryService categoryService = CategoryService();
+  final ServiceService serviceService = ServiceService(); // Define serviceService here
 
   SpaceScreen({Key? key}) : super(key: key);
 
@@ -117,26 +120,35 @@ class SpaceScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-  onPressed: () async {
-    List<Category> fetchedCategories = [];
-    try {
-      fetchedCategories = await categoryService.fetchCategories();
-    } catch (e) {
-      // Handle error fetching categories
-      print('Error fetching categories: $e');
-    }
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => AddSpaceScreen(
-          viewModel: AddSpaceViewModel(viewModel, categoryService),
-          categories: fetchedCategories,
-        ),
-      ),
-    );
-  },
-  child: const Icon(Icons.add),
+          onPressed: () async {
+            List<Category> fetchedCategories = [];
+            List<Service> fetchedServices = [];
+            try {
+              fetchedCategories = await categoryService.fetchCategories();
+              fetchedServices = await serviceService.fetchServices();
+            } catch (e) {
+              // Handle error fetching categories or services
+              print('Error fetching categories or services: $e');
+            }
+
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddSpaceScreen(
+  viewModel: AddSpaceViewModel(
+    viewModel,
+    categoryService,
+    serviceService,
+    fetchedServices, // Pass fetched services to the AddSpaceViewModel
+  ),
+  categories: fetchedCategories,
+  services: fetchedServices, // Pass fetched services to the AddSpaceScreen
 ),
 
+              ),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
