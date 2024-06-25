@@ -1,3 +1,5 @@
+import 'package:coworking_space_mobile/config/services/equipement_service.dart';
+import 'package:coworking_space_mobile/core/models/equipement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/spaces_viewmodel.dart';
 import 'package:coworking_space_mobile/core/models/space_model.dart';
@@ -15,7 +17,8 @@ import 'package:coworking_space_mobile/features/Admin/presentation/views/screens
 class SpaceScreen extends StatelessWidget {
   final SpaceViewModel viewModel = SpaceViewModel();
   final CategoryService categoryService = CategoryService();
-  final ServiceService serviceService = ServiceService(); // Define serviceService here
+  final ServiceService serviceService = ServiceService();
+  final EquipementService equipementService = EquipementService(); 
 
   SpaceScreen({Key? key}) : super(key: key);
 
@@ -129,35 +132,39 @@ class SpaceScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            List<Category> fetchedCategories = [];
-            List<Service> fetchedServices = [];
-            try {
-              fetchedCategories = await categoryService.fetchCategories();
-              fetchedServices = await serviceService.fetchServices();
-            } catch (e) {
-              // Handle error fetching categories or services
-              print('Error fetching categories or services: $e');
-            }
+  onPressed: () async {
+    List<Category> fetchedCategories = [];
+    List<Service> fetchedServices = [];
+    List<Equipement> fetchedEquipements = []; // Ensure you have fetched equipements
 
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AddSpaceScreen(
-  viewModel: AddSpaceViewModel(
-    viewModel,
-    categoryService,
-    serviceService,
-    fetchedServices, // Pass fetched services to the AddSpaceViewModel
-  ),
-  categories: fetchedCategories,
-  services: fetchedServices, // Pass fetched services to the AddSpaceScreen
+    try {
+      fetchedCategories = await categoryService.fetchCategories();
+      fetchedServices = await serviceService.fetchServices();
+      fetchedEquipements = await equipementService.fetchEquipements(); // Fetch equipements
+    } catch (e) {
+      print('Error fetching data: $e');
+      return;
+    }
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AddSpaceScreen(
+          viewModel: AddSpaceViewModel(
+            viewModel,
+            categoryService,
+            serviceService,
+            fetchedServices, // Pass fetched services to the AddSpaceViewModel
+          ),
+          categories: fetchedCategories,
+          services: fetchedServices, // Pass fetched services to the AddSpaceScreen
+          equipements: fetchedEquipements, // Pass fetched equipements to the AddSpaceScreen
+        ),
+      ),
+    );
+  },
+  child: const Icon(Icons.add),
 ),
 
-              ),
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
       ),
     );
   }

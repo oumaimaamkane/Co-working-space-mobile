@@ -1,5 +1,6 @@
 import 'package:coworking_space_mobile/core/models/category_model.dart';
 import 'package:coworking_space_mobile/core/models/space_model.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/list_equipements.dart';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/update_space_viewmodel.dart';
@@ -113,6 +114,20 @@ class UpdateSpaceScreen extends StatelessWidget {
                     services: viewModel.allServices,
                     selectedServices: viewModel.selectedServices,
                     onServiceSelected: (service) => viewModel.toggleService(service),
+                  ),
+                  const SizedBox(height: 16.0),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Equipements',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListEquipements(
+                    equipements: viewModel.allEquipements,
+                    selectedEquipements: viewModel.selectedEquipements,
+                    onEquipementSelected: (equipement) => viewModel.toggleEquipement(equipement),
                   ),
                   const SizedBox(height: 16.0),
                 ],

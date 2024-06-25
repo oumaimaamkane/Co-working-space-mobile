@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:coworking_space_mobile/core/models/equipement_model.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/list_equipements.dart';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/add_space_viewmodel.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
@@ -12,12 +14,14 @@ class AddSpaceScreen extends StatefulWidget {
   final AddSpaceViewModel viewModel;
   final List<Category> categories;
   final List<Service> services;
+  final List<Equipement> equipements;
 
   const AddSpaceScreen({
     Key? key,
     required this.viewModel,
     required this.categories,
     required this.services,
+    required this.equipements,
   }) : super(key: key);
 
   @override
@@ -224,6 +228,22 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                                 selectedServices: viewModel.selectedServices,
                                 onServiceSelected: (service) {
                                   viewModel.toggleService(service);
+                                },
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Equipements',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              ListEquipements(
+                                equipements: widget.equipements,
+                                selectedEquipements: viewModel.selectedEquipements,
+                                onEquipementSelected: (equipement) {
+                                  viewModel.toggleEquipement(equipement);
                                 },
                               ),
                               const SizedBox(height: 16.0),

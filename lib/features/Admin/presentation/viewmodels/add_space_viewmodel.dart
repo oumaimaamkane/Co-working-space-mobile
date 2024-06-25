@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:coworking_space_mobile/core/models/equipement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/core/models/space_model.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/spaces_viewmodel.dart';
@@ -16,6 +17,8 @@ class AddSpaceViewModel extends ChangeNotifier {
   List<Category> categories = [];
   List<Service> services = [];
   List<Service> selectedServices = [];
+  List<Equipement> equipements = [];
+  List<Equipement> selectedEquipements = [];
   bool isLoadingCategories = true;
   bool isLoadingServices = true;
 
@@ -79,6 +82,15 @@ AddSpaceViewModel(
     notifyListeners();
   }
 
+  void toggleEquipement(Equipement equipement) {
+    if (selectedEquipements.contains(equipement)) {
+      selectedEquipements.remove(equipement);
+    } else {
+      selectedEquipements.add(equipement);
+    }
+    notifyListeners();
+  }
+
   void setSelectedCategory(String categoryId) {
     selectedCategory = categoryId;
     notifyListeners();
@@ -103,6 +115,7 @@ AddSpaceViewModel(
       capacity: int.parse(capacityController.text),
       categoryId: selectedCategory!,
       services: selectedServices.map((s) => s.id).toList(),
+      equipements: selectedEquipements.map((e) => e.id).toList(),
       imageUrl: staticImageUrl, // Assign staticImageUrl here
     ));
     await spaceViewModel.fetchSpaces();

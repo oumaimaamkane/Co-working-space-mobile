@@ -1,3 +1,5 @@
+import 'package:coworking_space_mobile/config/services/equipement_service.dart';
+import 'package:coworking_space_mobile/core/models/equipement_model.dart';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/core/models/space_model.dart';
 import 'package:coworking_space_mobile/core/models/service_model.dart';
@@ -12,6 +14,7 @@ class UpdateSpaceViewModel extends ChangeNotifier {
   final CategoryService categoryService;
   final Space space;
   final ServiceService serviceService = ServiceService();
+  final EquipementService equipementService = EquipementService();
 
   final TextEditingController floorController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -20,6 +23,8 @@ class UpdateSpaceViewModel extends ChangeNotifier {
 
   List<Service> allServices = [];
   List<Service> selectedServices = [];
+  List<Equipement> allEquipements = [];
+  List<Equipement> selectedEquipements = [];
 
   String? _imageUrl;
   String _selectedStatus; // Updated to non-nullable to ensure it's initialized
@@ -33,7 +38,9 @@ class UpdateSpaceViewModel extends ChangeNotifier {
     priceController.text = space.price.toString();
     capacityController.text = space.capacity.toString();
     selectedServices = space.services.map((serviceId) => Service(id: serviceId, name: '')).toList();
+    selectedEquipements = space.equipements.map((equipementId) => Equipement(id: equipementId, name: '')).toList();
     _loadServices();
+    _loadEquipements();
   }
 
   Future<void> _loadServices() async {
@@ -42,11 +49,26 @@ class UpdateSpaceViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _loadEquipements() async {
+    allEquipements = await equipementService.fetchEquipements();
+    selectedEquipements = allEquipements.where((equipement) => space.equipements.contains(equipement.id)).toList();
+    notifyListeners();
+  }
+
   void toggleService(Service service) {
     if (selectedServices.contains(service)) {
       selectedServices.remove(service);
     } else {
       selectedServices.add(service);
+    }
+    notifyListeners();
+  }
+
+  void toggleEquipement(Equipement equipement) {
+    if (selectedEquipements.contains(equipement)) {
+      selectedEquipements.remove(equipement);
+    } else {
+      selectedEquipements.add(equipement);
     }
     notifyListeners();
   }
@@ -61,6 +83,7 @@ class UpdateSpaceViewModel extends ChangeNotifier {
       capacity: int.parse(capacityController.text),
       categoryId: _selectedCategory,
       services: selectedServices.map((s) => s.id).toList(),
+      equipements: selectedEquipements.map((e) => e.id).toList(),
       imageUrl: _imageUrl ?? space.imageUrl,
     );
   }
