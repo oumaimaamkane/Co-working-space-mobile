@@ -62,7 +62,15 @@ class SpaceScreen extends StatelessWidget {
                                 children: [
                                   IconButton(
                                     icon: const Icon(Icons.edit),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      List<Category> fetchedCategories = [];
+                                      try {
+                                        fetchedCategories =
+                                            await categoryService.fetchCategories();
+                                      } catch (e) {
+                                        // Handle error fetching categories
+                                        print('Error fetching categories: $e');
+                                      }
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => UpdateSpaceScreen(
@@ -71,6 +79,7 @@ class SpaceScreen extends StatelessWidget {
                                               categoryService,
                                               space,
                                             ),
+                                            categories: fetchedCategories,
                                           ),
                                         ),
                                       );

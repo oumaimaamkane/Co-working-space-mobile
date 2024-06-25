@@ -1,3 +1,5 @@
+import 'package:coworking_space_mobile/core/models/category_model.dart';
+import 'package:coworking_space_mobile/core/models/space_model.dart';
 import 'package:flutter/material.dart';
 import 'package:coworking_space_mobile/features/constants.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/update_space_viewmodel.dart';
@@ -8,8 +10,13 @@ import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets
 
 class UpdateSpaceScreen extends StatelessWidget {
   final UpdateSpaceViewModel viewModel;
+  final List<Category> categories;
 
-  const UpdateSpaceScreen({Key? key, required this.viewModel}) : super(key: key);
+  const UpdateSpaceScreen({
+    Key? key,
+    required this.viewModel,
+    required this.categories,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,35 +49,66 @@ class UpdateSpaceScreen extends StatelessWidget {
                   if (viewModel.space.imageUrl.isEmpty)
                     const Text('No images for this space', style: TextStyle(fontSize: 16)),
                   const SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
                     controller: viewModel.floorController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(labelText: 'Floor Number', border: OutlineInputBorder()),
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
                     controller: viewModel.descriptionController,
                     maxLines: null,
                     decoration: const InputDecoration(labelText: 'Description', border: OutlineInputBorder()),
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
-                    controller: viewModel.statusController,
-                    decoration: const InputDecoration(labelText: 'Status', border: OutlineInputBorder()),
+                  DropdownButtonFormField<String>(
+                    value: viewModel.selectedStatus, // Ensure this is set correctly
+                    items: [
+                      'Occupied',
+                      'Available',
+                      'Under Maintenance',
+                    ].map((status) {
+                      return DropdownMenuItem<String>(
+                        value: status,
+                        child: Text(status),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      viewModel.setSelectedStatus(value!); // Update the selected status in the viewModel
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Status',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a status';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
                     controller: viewModel.priceController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(labelText: 'Price', border: OutlineInputBorder()),
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
+                  TextFormField(
                     controller: viewModel.capacityController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(labelText: 'Capacity', border: OutlineInputBorder()),
                   ),
                   const SizedBox(height: 16.0),
+                  const SizedBox(height: 20),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Services',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   ListServices(
                     services: viewModel.allServices,
                     selectedServices: viewModel.selectedServices,
@@ -100,9 +138,12 @@ class UpdateSpaceScreen extends StatelessWidget {
                     child: const Text('Upload Image'),
                   ),
                   ElevatedButton(
-                    onPressed: () => viewModel.updateSpace(context, viewModel.getSpace()),
+                    onPressed: () {
+                      Space updatedSpace = viewModel.getSpace();
+                      viewModel.updateSpace(context, updatedSpace);
+                    },
                     style: buttonStyle,
-                    child: const Text('Update Space'),
+                    child: const Text('Save'),
                   ),
                 ],
               ),

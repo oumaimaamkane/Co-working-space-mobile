@@ -50,160 +50,189 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
             child: viewModel.isLoadingCategories
                 ? const Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Add a new space by filling out the details below:',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                  if (_isImageVisible)
-                    Container(
-                      height: 200, // Set the height of the image container
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: FileImage(_pickedImage!),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey),
-                      ),
-                    ),
-                  const SizedBox(height: 20),
-                  Form(
-                    key: _formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
-                          controller: viewModel.descriptionController,
-                          decoration: const InputDecoration(
-                              labelText: 'Description'),
-                          maxLines:
-                          null, // Allows the description field to expand vertically
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a description';
-                            }
-                            return null;
-                          },
+                        const Text(
+                          'Add a new space by filling out the details below:',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 20),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Services',
-                            style: TextStyle(fontSize: 16),
+                        const SizedBox(height: 16.0),
+                        if (_isImageVisible)
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: FileImage(_pickedImage!),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                          ),
+                        const SizedBox(height: 16.0),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: viewModel.descriptionController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Description',
+                                  border: OutlineInputBorder(),
+                                ),
+                                maxLines: null,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a description';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 16.0),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: viewModel.floorController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Floor Number',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a floor number';
+                                        }
+                                        if (int.tryParse(value) == null) {
+                                          return 'Floor must be a number';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      value: viewModel.selectedStatus,
+                                      items: [
+                                        'Occupied',
+                                        'Available',
+                                        'Under Maintenance'
+                                      ].map((status) {
+                                        return DropdownMenuItem<String>(
+                                          value: status,
+                                          child: Text(status),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        viewModel.setSelectedStatus(value!);
+                                      },
+                                      decoration: const InputDecoration(
+                                        labelText: 'Status',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please select a status';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16.0),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: viewModel.priceController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Price',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a price';
+                                        }
+                                        if (double.tryParse(value) == null) {
+                                          return 'Price must be a number';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: viewModel.capacityController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Capacity',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a capacity';
+                                        }
+                                        if (int.tryParse(value) == null) {
+                                          return 'Capacity must be a number';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16.0),
+                              DropdownButtonFormField<String>(
+                                value: viewModel.selectedCategory,
+                                items: widget.categories.map((category) {
+                                  return DropdownMenuItem<String>(
+                                    value: category.id,
+                                    child: Text(category.name),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  viewModel.setSelectedCategory(value!);
+                                },
+                                decoration: const InputDecoration(
+                                  labelText: 'Category',
+                                  border: OutlineInputBorder(),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please select a category';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Services',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              ListServices(
+                                services: widget.services,
+                                selectedServices: viewModel.selectedServices,
+                                onServiceSelected: (service) {
+                                  viewModel.toggleService(service);
+                                },
+                              ),
+                              const SizedBox(height: 16.0),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: viewModel.floorController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Floor'),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter a floor number';
-                                  }
-                                  if (int.tryParse(value) == null) {
-                                    return 'Floor must be a number';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: TextFormField(
-                                controller: viewModel.statusController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Status'),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: viewModel.priceController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Price'),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter a price';
-                                  }
-                                  if (double.tryParse(value) == null) {
-                                    return 'Price must be a number';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: TextFormField(
-                                controller: viewModel.capacityController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Capacity'),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter a capacity';
-                                  }
-                                  if (int.tryParse(value) == null) {
-                                    return 'Capacity must be a number';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        DropdownButtonFormField<String>(
-                          value: viewModel.selectedCategory,
-                          items: widget.categories.map((category) {
-                            return DropdownMenuItem<String>(
-                              value: category.id,
-                              child: Text(category.name),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            viewModel.setSelectedCategory(value!);
-                          },
-                          decoration:
-                          const InputDecoration(labelText: 'Category'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select a category';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        ListServices(
-                          services: widget.services,
-                          selectedServices: widget.viewModel.selectedServices,
-                          onServiceSelected: (service) {
-                            widget.viewModel.toggleService(service);
-                          },
-                        ),
-
-                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
           ),
           bottomNavigationBar: BottomAppBar(
             child: Container(
@@ -221,8 +250,7 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                           _pickedImage = File(pickedFile.path);
                           _isImageVisible = true;
                         });
-                        viewModel.uploadImage(
-                            File(pickedFile.path));
+                        viewModel.uploadImage(File(pickedFile.path));
                       }
                     },
                     style: buttonStyle,
@@ -230,14 +258,16 @@ class _AddSpaceScreenState extends State<AddSpaceScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        if (_pickedImage != null) {
-                          await viewModel.uploadImage(_pickedImage!);
-                        } else {
-                          await viewModel.addSpace();
-                        }
-                        Navigator.pop(context);
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      //   if (_pickedImage != null) {
+                      //     // await viewModel.uploadImage(_pickedImage!);
+                      //   } else {
+                      //     await viewModel.addSpace();
+                      //   }
+                      //   Navigator.pop(context);
+                      // }
+                      await viewModel.addSpace();
+                      Navigator.pop(context);
                     },
                     style: buttonStyle,
                     child: const Text('Add Space'),

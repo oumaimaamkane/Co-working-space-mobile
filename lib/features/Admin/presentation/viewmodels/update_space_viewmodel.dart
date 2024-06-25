@@ -11,23 +11,25 @@ class UpdateSpaceViewModel extends ChangeNotifier {
   final SpaceViewModel spaceViewModel;
   final CategoryService categoryService;
   final Space space;
-  final ServiceService serviceService = ServiceService(); // Create an instance of ServiceService
+  final ServiceService serviceService = ServiceService();
 
   final TextEditingController floorController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController statusController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController capacityController = TextEditingController();
-  
+
   List<Service> allServices = [];
   List<Service> selectedServices = [];
-  
-  String? _imageUrl;
 
-  UpdateSpaceViewModel(this.spaceViewModel, this.categoryService, this.space) {
+  String? _imageUrl;
+  String _selectedStatus; // Updated to non-nullable to ensure it's initialized
+  String _selectedCategory;
+
+  UpdateSpaceViewModel(this.spaceViewModel, this.categoryService, this.space)
+      : _selectedStatus = space.status,
+        _selectedCategory = space.categoryId {
     floorController.text = space.floor.toString();
     descriptionController.text = space.description;
-    statusController.text = space.status;
     priceController.text = space.price.toString();
     capacityController.text = space.capacity.toString();
     selectedServices = space.services.map((serviceId) => Service(id: serviceId, name: '')).toList();
@@ -35,7 +37,7 @@ class UpdateSpaceViewModel extends ChangeNotifier {
   }
 
   Future<void> _loadServices() async {
-    allServices = await serviceService.fetchServices(); // Use the instance to fetch services
+    allServices = await serviceService.fetchServices();
     selectedServices = allServices.where((service) => space.services.contains(service.id)).toList();
     notifyListeners();
   }
@@ -54,10 +56,10 @@ class UpdateSpaceViewModel extends ChangeNotifier {
       id: space.id,
       floor: int.parse(floorController.text),
       description: descriptionController.text,
-      status: statusController.text,
+      status: _selectedStatus,
       price: double.parse(priceController.text),
       capacity: int.parse(capacityController.text),
-      categoryId: space.categoryId,
+      categoryId: _selectedCategory,
       services: selectedServices.map((s) => s.id).toList(),
       imageUrl: _imageUrl ?? space.imageUrl,
     );
@@ -67,6 +69,7 @@ class UpdateSpaceViewModel extends ChangeNotifier {
     String? imageUrl = await ImageUtils.uploadImage(imageFile, 'spaces');
     if (imageUrl != null) {
       _imageUrl = imageUrl;
+      notifyListeners();
     }
   }
 
@@ -75,4 +78,18 @@ class UpdateSpaceViewModel extends ChangeNotifier {
     notifyListeners();
     Navigator.of(context).pop();
   }
+
+  void setSelectedStatus(String status) {
+    _selectedStatus = status;
+    notifyListeners();
+  }
+
+  String get selectedStatus => _selectedStatus;
+
+  void setSelectedCategory(String category) {
+    _selectedCategory = category;
+    notifyListeners();
+  }
+
+  String get selectedCategoryId => _selectedCategory;
 }

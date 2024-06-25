@@ -26,15 +26,15 @@ class Space {
   factory Space.fromDocument(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Space(
-      id: doc.id, // Add this line
+      id: doc.id,
       floor: data['floor'] ?? 0,
       description: data['description'] ?? '',
       status: data['status'] ?? '',
       price: (data['price'] ?? 0.0).toDouble(),
       capacity: data['capacity'] ?? 0,
-      categoryId: data['category_id'] ?? '',
+      categoryId: data['categoryId'] ?? '', // Use 'categoryId' here
       services: List<String>.from(data['services'] ?? []),
-      imageUrl: data['image_url'] ?? '',
+      imageUrl: data['imageUrl'] ?? '',
     );
   }
 
@@ -45,9 +45,10 @@ class Space {
       'status': status,
       'price': price,
       'capacity': capacity,
-      'category_id': categoryId,
+      'categoryId': categoryId, // Use 'categoryId' here
       'services': services,
-      'image_url': imageUrl,
+      'imageUrl': imageUrl,
     };
   }
 }
+
