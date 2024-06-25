@@ -101,6 +101,7 @@ class UpdateSpaceScreen extends StatelessWidget {
                     decoration: const InputDecoration(labelText: 'Capacity', border: OutlineInputBorder()),
                   ),
                   const SizedBox(height: 16.0),
+                  
                   const SizedBox(height: 20),
                   const Align(
                     alignment: Alignment.centerLeft,

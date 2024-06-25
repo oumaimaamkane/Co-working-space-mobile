@@ -42,11 +42,9 @@ class Menu extends StatelessWidget {
                       onTap: () => viewModel.navigateTo(context, AppRoutes.dashmin),
                     ),
                     ListTile(
-                      leading: const Icon(Icons.settings),
-                      title: const Text('Settings'),
-                      onTap: () {
-                        // Add your settings logic here
-                      },
+                      leading: const Icon(Icons.supervised_user_circle),
+                      title: const Text('Users'), 
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.users), // Navigate to Users screen
                     ),
                      ListTile(
                       leading: const Icon(Icons.space_dashboard),
@@ -72,6 +70,13 @@ class Menu extends StatelessWidget {
                       leading: const Icon(Icons.home),
                       title: const Text('Home'),
                       onTap: () => viewModel.navigateTo(context, AppRoutes.main),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.settings),
+                      title: const Text('Settings'),
+                      onTap: () {
+                        // Add your settings logic here
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.logout),
