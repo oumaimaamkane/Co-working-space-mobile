@@ -1,3 +1,5 @@
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/admin_profile.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/admin_profile_update.dart';
 import 'package:get/get.dart';
 import 'package:coworking_space_mobile/core/layout/main_layout.dart';
 import 'package:coworking_space_mobile/features/home.dart';
@@ -30,6 +32,8 @@ class AppRoutes {
   static const String space = '/space';
   static const String categories = '/categories';
   static const String services = '/services';
+  static const String adminProfile = '/adminProfile';
+  static const String updateAdminProfile = '/update-admin-profile';
 
   static final pages = [
     GetPage(name: main, page: () => const MainLayout(title: 'Coworking Space')),
@@ -46,5 +50,7 @@ class AppRoutes {
     GetPage(name: space, page: () => SpaceScreen()),
     GetPage(name: categories, page: () => CategoryScreen()),
     GetPage(name: services, page: () => ServiceScreen()),
+    GetPage(name: adminProfile, page: () => AdminProfile()),
+    GetPage(name: updateAdminProfile, page: () => AdminProfileUpdate()),
   ];
 }

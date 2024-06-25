@@ -14,7 +14,8 @@ class ListEquipements extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color accentColor = Theme.of(context).colorScheme.secondary;
+    final Color primaryColor = Theme.of(context).primaryColor;
+    final Color unselectedColor = Colors.grey[200]!;
 
     return Wrap(
       spacing: 8.0,
@@ -27,8 +28,13 @@ class ListEquipements extends StatelessWidget {
           onSelected: (selected) {
             onEquipementSelected(equipement);
           },
-          selectedColor: accentColor,
-          backgroundColor: Colors.grey[200],
+          selectedColor: primaryColor,
+          backgroundColor: unselectedColor,
+          side: BorderSide(color: isSelected ? primaryColor : Colors.grey),
+          labelStyle: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.w600,
+          ),
         );
       }).toList(),
     );

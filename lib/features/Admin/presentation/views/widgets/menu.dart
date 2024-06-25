@@ -32,9 +32,9 @@ class Menu extends StatelessWidget {
                   context: context,
                   tiles: [
                     ListTile(
-                      leading: const Icon(Icons.home),
-                      title: const Text('Home'),
-                      onTap: () => viewModel.navigateTo(context, AppRoutes.main),
+                      leading: const Icon(Icons.person),
+                      title: const Text('Profile'), 
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.adminProfile), // Navigate to Admin Profile
                     ),
                     ListTile(
                       leading: const Icon(Icons.dashboard),
@@ -67,6 +67,11 @@ class Menu extends StatelessWidget {
                       leading: const Icon(Icons.devices),
                       title: const Text('Equipements'),
                       onTap: () => viewModel.navigateTo(context, AppRoutes.equipements),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text('Home'),
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.main),
                     ),
                     ListTile(
                       leading: const Icon(Icons.logout),
