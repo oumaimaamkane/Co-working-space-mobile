@@ -1,3 +1,4 @@
+import 'package:coworking_space_mobile/features/Admin/presentation/views/widgets/user_info_dialogue.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/viewmodels/users_viewmodel.dart';
@@ -25,26 +26,37 @@ class UsersScreen extends StatelessWidget {
                   caption: "Management of users",
                 ),
                 const SizedBox(height: 32),
-                Obx(() => ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: viewModel.users.length,
-                      itemBuilder: (context, index) {
-                        UserModel user = viewModel.users[index];
-                        return Card(
-                          margin: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            leading: const Icon(Icons.person), // Add an icon or any leading widget here
-                            title: Text(user.name),
-                            subtitle: Text(user.email),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.block),
-                              onPressed: () => viewModel.banUser(user),
+                Obx(() => viewModel.users.length > 0
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: viewModel.users.length,
+                        itemBuilder: (context, index) {
+                          UserModel user = viewModel.users[index];
+                          return Card(
+                            margin: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.person),
+                              title: Text(user.name),
+                              subtitle: Text(user.email),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.info),
+                                    onPressed: () => _showUserInfoDialog(context, user),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.block),
+                                    onPressed: () => viewModel.banUser(user),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    )),
+                          );
+                        },
+                      )
+                    : const Center(child: Text('Loading Users...'))),
               ],
             ),
           ),
@@ -52,4 +64,14 @@ class UsersScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _showUserInfoDialog(BuildContext context, UserModel user) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return UserInfoDialog(user: user);
+    },
+  );
+}
+
 }
