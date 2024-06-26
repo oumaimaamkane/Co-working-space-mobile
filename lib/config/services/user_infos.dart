@@ -46,4 +46,15 @@ class UserInfos {
       throw Exception('Failed to ban user: $e');
     }
   }
+
+  Future<void> unbanUser(String? userId) async {
+    if (userId == null) {
+      throw Exception('User id is null');
+    }
+    try {
+      await usersCollection.doc(userId).update({'isBanned': false});
+    } catch (e) {
+      throw Exception('Failed to unban user: $e');
+    }
+  }
 }

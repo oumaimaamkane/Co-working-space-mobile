@@ -47,12 +47,17 @@ class UsersScreen extends StatelessWidget {
                                     onPressed: () => _showUserInfoDialog(context, user),
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.block),
-                                    onPressed: user.isBanned
-                                        ? null
-                                        : () => viewModel.banUser(user),
-                                    color: user.isBanned ? Colors.grey : Colors.red,
-                                  ),
+  icon: Icon(user.isBanned ? Icons.block : Icons.check_circle),
+  onPressed: () {
+    if (user.isBanned) {
+      viewModel.unbanUser(user);
+    } else {
+      viewModel.banUser(user);
+    }
+  },
+  color: user.isBanned ? Colors.red : Colors.green,
+),
+
                                 ],
                               ),
                             ),

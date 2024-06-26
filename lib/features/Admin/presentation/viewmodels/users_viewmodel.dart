@@ -37,4 +37,19 @@ class UsersViewModel extends GetxController {
       print('Error banning user: $e');
     }
   }
+
+  Future<void> unbanUser(UserModel user) async {
+  try {
+    if (user.id == null) {
+      throw Exception('User id is null');
+    }
+    print('Unbanning user: ${user.name}');
+    await _userInfos.unbanUser(user.id); // Implement unbanUser in your UserInfos service
+    user.isBanned = false;
+    users.refresh();
+  } catch (e) {
+    print('Error unbanning user: $e');
+  }
+}
+
 }
