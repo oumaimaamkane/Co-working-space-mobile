@@ -1,6 +1,6 @@
+import 'package:coworking_space_mobile/core/models/user_model.dart';
 import 'package:get/get.dart';
 import 'package:coworking_space_mobile/config/services/user_infos.dart';
-import 'package:coworking_space_mobile/core/models/user_model.dart';
 
 class UsersViewModel extends GetxController {
   final UserInfos _userInfos = UserInfos();
@@ -26,8 +26,13 @@ class UsersViewModel extends GetxController {
 
   Future<void> banUser(UserModel user) async {
     try {
+      if (user.id == null) {
+        throw Exception('User id is null');
+      }
       print('Banning user: ${user.name}');
-      // Implement ban logic here (e.g., update user status in Firestore)
+      await _userInfos.banUser(user.id); // Use user.id to access the unique identifier
+      user.isBanned = true;
+      users.refresh();
     } catch (e) {
       print('Error banning user: $e');
     }

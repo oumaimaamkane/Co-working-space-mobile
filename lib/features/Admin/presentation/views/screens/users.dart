@@ -48,7 +48,10 @@ class UsersScreen extends StatelessWidget {
                                   ),
                                   IconButton(
                                     icon: const Icon(Icons.block),
-                                    onPressed: () => viewModel.banUser(user),
+                                    onPressed: user.isBanned
+                                        ? null
+                                        : () => viewModel.banUser(user),
+                                    color: user.isBanned ? Colors.grey : Colors.red,
                                   ),
                                 ],
                               ),
@@ -66,12 +69,11 @@ class UsersScreen extends StatelessWidget {
   }
 
   void _showUserInfoDialog(BuildContext context, UserModel user) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return UserInfoDialog(user: user);
-    },
-  );
-}
-
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return UserInfoDialog(user: user);
+      },
+    );
+  }
 }

@@ -1,10 +1,10 @@
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/register_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coworking_space_mobile/config/services/sync_auth.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:get/get.dart';
-import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/register_viewmodel.dart';
 import 'package:coworking_space_mobile/config/services/user_infos.dart';
 
 class LoginViewModel extends GetxController {
@@ -30,10 +30,17 @@ class LoginViewModel extends GetxController {
 
         // Fetch the user data
         DocumentSnapshot userData = await _userService.getUserData(userId);
+        bool isBanned = userData['isBanned'] ?? false; // Check if user is banned
+
+        if (isBanned) {
+          // User is banned, prevent login
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('You are banned. Contact support for more information.')));
+          return;
+        }
+
         userName.value = userData['name'] ?? '';
         userMail.value = userData['email'] ?? '';
         userPhone.value = userData['phone'] ?? '';
-
 
         if (role == 'admin') {
           Navigator.pushReplacementNamed(context, AppRoutes.dashmin);
@@ -61,4 +68,3 @@ class LoginViewModel extends GetxController {
     super.dispose();
   }
 }
-

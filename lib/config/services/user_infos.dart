@@ -27,18 +27,23 @@ class UserInfos {
       print('Firestore returned ${querySnapshot.docs.length} documents');
       List<UserModel> fetchedUsers = querySnapshot.docs.map((doc) {
         print('Processing user: ${doc.id}, data: ${doc.data()}');
-        return UserModel(
-          name: doc['name'] ?? '',
-          email: doc['email'] ?? '',
-          password: doc['password'] ?? '',
-          role: doc['role'] ?? 'user',
-          phone: doc['phone'],
-        );
+        return UserModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
       }).toList();
       return fetchedUsers;
     } catch (e) {
       print('Error fetching users: $e');
       throw e;
+    }
+  }
+
+  Future<void> banUser(String? userId) async {
+    if (userId == null) {
+      throw Exception('User id is null');
+    }
+    try {
+      await usersCollection.doc(userId).update({'isBanned': true});
+    } catch (e) {
+      throw Exception('Failed to ban user: $e');
     }
   }
 }
