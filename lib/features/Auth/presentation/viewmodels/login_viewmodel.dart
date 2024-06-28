@@ -1,10 +1,10 @@
 import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/register_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coworking_space_mobile/config/services/sync_auth.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
-import 'package:get/get.dart';
 import 'package:coworking_space_mobile/config/services/user_infos.dart';
 
 class LoginViewModel extends GetxController {
@@ -14,6 +14,7 @@ class LoginViewModel extends GetxController {
   var userName = ''.obs;
   var userMail = ''.obs;
   var userPhone = ''.obs;
+  var userId = ''.obs;
 
   final UserInfos _userService = UserInfos();
 
@@ -26,6 +27,7 @@ class LoginViewModel extends GetxController {
         );
 
         String userId = userCredential.user!.uid;
+        this.userId.value = userId; // Ensure this is set correctly
         String role = await SyncAuth().getUserRole(userId);
 
         // Fetch the user data
@@ -43,9 +45,9 @@ class LoginViewModel extends GetxController {
         userPhone.value = userData['phone'] ?? '';
 
         if (role == 'admin') {
-          Navigator.pushReplacementNamed(context, AppRoutes.dashmin);
+          Get.offNamed(AppRoutes.dashmin);
         } else if (role == 'user') {
-          Navigator.pushReplacementNamed(context, AppRoutes.clientProfile);
+          Get.offNamed(AppRoutes.clientProfile);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Unknown role')));
         }

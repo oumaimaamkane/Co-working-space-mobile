@@ -39,9 +39,23 @@ class BenefitsSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          const Text(
-            'We are proud of what we have come up to at our center! Only here you get to enjoy with talented people who work in different areas, designers, photographers, engineers etc.',
-            style: TextStyle(fontSize: 16.0),
+          Row(
+            children: [
+              const Expanded(
+                child: const Text(
+                  'We are proud of what we have come up to at our center! Only here you get to enjoy with talented people who work in different areas, designers, photographers, engineers etc.',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              Expanded(
+                child: Image.asset(
+                  'images/bannercw1-2.jpg',
+                  height: 200.0, // Adjust the height as needed
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16.0),
           const Column(

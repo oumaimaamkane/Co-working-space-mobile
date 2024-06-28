@@ -67,6 +67,11 @@ class Menu extends StatelessWidget {
                       onTap: () => viewModel.navigateTo(context, AppRoutes.equipements),
                     ),
                     ListTile(
+                      leading: const Icon(Icons.article),
+                      title: const Text('Blogs'),
+                      onTap: () => viewModel.navigateTo(context, AppRoutes.blogs),
+                    ),
+                    ListTile(
                       leading: const Icon(Icons.home),
                       title: const Text('Home'),
                       onTap: () => viewModel.navigateTo(context, AppRoutes.main),

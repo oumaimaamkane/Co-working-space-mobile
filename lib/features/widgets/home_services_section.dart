@@ -15,9 +15,8 @@ class _ServicesSectionState extends State<ServicesSection> with SingleTickerProv
   late Animation<double> _scaleAnimation;
 
   Animation<double> getScaleAnimation() {
-  return Tween<double>(begin: 1.0, end: 1.09).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeInOut));
-}
-
+    return Tween<double>(begin: 1.0, end: 1.09).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeInOut));
+  }
 
   @override
   void initState() {
@@ -77,6 +76,7 @@ class _ServicesSectionState extends State<ServicesSection> with SingleTickerProv
             style: buttonStyle,
             child: const Text('Explore Spaces'),
           ),
+          const SizedBox(height: 30),
           ServiceBox(
             iconData: Icons.wifi,
             title: 'Highspeed WiFi',

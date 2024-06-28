@@ -1,3 +1,5 @@
+import 'package:coworking_space_mobile/core/models/user_model.dart';
+import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -6,11 +8,9 @@ import 'package:coworking_space_mobile/features/widgets/profile_menu.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:coworking_space_mobile/core/layout/app_bar.dart';
 import 'package:coworking_space_mobile/features/Client/presentation/viewmodels/profile_viewmodel.dart';
-import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
-import 'package:coworking_space_mobile/core/models/user_model.dart';
 
 class ProfileView extends StatelessWidget {
-  final ProfileViewModel viewModel = ProfileViewModel();
+  final ProfileViewModel viewModel = Get.put(ProfileViewModel());
   final LoginViewModel loginViewModel = Get.find<LoginViewModel>();
 
   ProfileView({Key? key}) : super(key: key);
@@ -18,17 +18,17 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
       appBar: const MyAppBar(
         title: tProfile,
-        showPersonIcon: false, // Don't show the person icon
+        showPersonIcon: false,
       ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(tDefaultSize),
           child: Column(
             children: [
-              /// -- IMAGE
               Stack(
                 children: [
                   SizedBox(
@@ -60,15 +60,15 @@ class ProfileView extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Obx(() => Text(
-                loginViewModel.userName.value.isNotEmpty
-                    ? loginViewModel.userName.value
-                    : tProfileHeading,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : Colors.black,
-                ),
-              )),
+                    loginViewModel.userName.value.isNotEmpty
+                        ? loginViewModel.userName.value
+                        : tProfileHeading,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
+                  )),
               Text(
                 loginViewModel.userMail.value.isNotEmpty
                     ? loginViewModel.userMail.value
@@ -79,39 +79,28 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              /// -- BUTTON
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-  onPressed: () {
-    var arguments = UserModel(
-      name: loginViewModel.userName.value,
-      email: loginViewModel.userMail.value,
-      password: '', 
-      role: 'user', 
-      phone: loginViewModel.userPhone.value,
-    );
-    Get.toNamed(AppRoutes.updateProfile, arguments: arguments);
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: tPrimaryColor,
-    side: BorderSide.none,
-    shape: const StadiumBorder(),
-  ),
-  child: const Text(
-    tEditProfile,
-    style: TextStyle(color: tDarkColor),
-  ),
-),
-
-
+                  onPressed: () {
+                    var arguments = UserModel(
+                      name: loginViewModel.userName.value,
+                      email: loginViewModel.userMail.value,
+                      password: '',
+                      role: 'user',
+                      phone: loginViewModel.userPhone.value,
+                    );
+                    Get.toNamed(AppRoutes.updateProfile, arguments: arguments);
+                  },
+                  style: buttonStyle,
+                  child: const Text(
+                    tEditProfile,
+                  ),
+                ),
               ),
               const SizedBox(height: 30),
               const Divider(),
               const SizedBox(height: 10),
-
-              /// -- MENU
               ProfileMenuWidget(
                 title: "Settings",
                 icon: LineAwesomeIcons.cog,
@@ -123,9 +112,18 @@ class ProfileView extends StatelessWidget {
                 onPress: () {},
               ),
               ProfileMenuWidget(
-                title: "User Management",
-                icon: LineAwesomeIcons.user_check,
-                onPress: () {},
+                title: "My Bookings",
+                icon: LineAwesomeIcons.calendar_check,
+                onPress: () {
+                  // Navigation or logic for "My Bookings"
+                },
+              ),
+              ProfileMenuWidget(
+                title: "My Blogs",
+                icon: LineAwesomeIcons.pen,
+                onPress: () {
+                  Get.toNamed(AppRoutes.userBlogs, arguments: loginViewModel.userId.value);
+                },
               ),
               const Divider(),
               const SizedBox(height: 10),

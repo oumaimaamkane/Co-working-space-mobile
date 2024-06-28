@@ -5,6 +5,20 @@ class CategoryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<Category> categories = []; // Remove the final keyword
 
+  Future<Category?> getCategoryById(String id) async {
+    try {
+      DocumentSnapshot doc =
+          await _firestore.collection('categories').doc(id).get();
+      if (doc.exists) {
+        return Category.fromDocument(doc);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch category');
+    }
+  }
+  
   Future<List<Category>> fetchCategories() async {
     try {
       QuerySnapshot snapshot = await _firestore.collection('categories').get();

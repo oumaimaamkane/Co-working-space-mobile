@@ -1,6 +1,6 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:coworking_space_mobile/features/Auth/presentation/viewmodels/login_viewmodel.dart';
 import 'package:coworking_space_mobile/config/routes/app_routes.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -14,7 +14,6 @@ class LoginScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              // Prevent back navigation if necessary or customize as per requirement
               Get.offAllNamed(AppRoutes.main);
             },
             icon: const Icon(LineAwesomeIcons.angle_left),
@@ -75,7 +74,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
 
 class _Header extends StatelessWidget {
   const _Header({Key? key}) : super(key: key);

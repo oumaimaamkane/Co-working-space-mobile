@@ -30,7 +30,7 @@ class _ServiceBoxState extends State<ServiceBox> {
       height: widget.isExpanded ? 200 : 100,
       decoration: BoxDecoration(
         color: widget.isExpanded
-            ? const Color(0xFF55bbae)
+            ? const Color.fromARGB(255, 0, 0, 0)
             : const Color.fromARGB(255, 210, 210, 210),
         borderRadius: BorderRadius.circular(8),
       ),
@@ -39,9 +39,7 @@ class _ServiceBoxState extends State<ServiceBox> {
       child: Transform.scale(
         scale: widget.isExpanded ? 1.0 : widget.scaleAnimation!.value,
         child: InkWell(
-          onTap: () {
-            widget.onTap(); // Call onTap function when tapped
-          },
+          onTap: widget.onTap,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -54,16 +52,16 @@ class _ServiceBoxState extends State<ServiceBox> {
                 child: Icon(
                   widget.iconData,
                   size: 40,
-                  color: const Color.fromARGB(255, 60, 132, 122),
+                  color: widget.isExpanded ? Colors.white : Colors.black,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 widget.title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: widget.isExpanded ? Colors.white : Colors.black,
                 ),
               ),
               const SizedBox(height: 8),
@@ -75,9 +73,9 @@ class _ServiceBoxState extends State<ServiceBox> {
                 firstChild: Container(),
                 secondChild: Text(
                   widget.description,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: widget.isExpanded ? Colors.white : Colors.black,
                     height: 1.5,
                   ),
                   textAlign: TextAlign.center,

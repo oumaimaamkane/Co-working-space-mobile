@@ -1,6 +1,10 @@
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/admin_profile.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/admin_profile_update.dart';
+import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/blogs.dart';
 import 'package:coworking_space_mobile/features/Admin/presentation/views/screens/users.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/create_blog_view.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/update_blog_view.dart';
+import 'package:coworking_space_mobile/features/Client/presentation/views/screens/user_blogs_view.dart';
 import 'package:get/get.dart';
 import 'package:coworking_space_mobile/core/layout/main_layout.dart';
 import 'package:coworking_space_mobile/features/home.dart';
@@ -36,6 +40,11 @@ class AppRoutes {
   static const String adminProfile = '/adminProfile';
   static const String updateAdminProfile = '/update-admin-profile';
   static const String users = '/users';
+  static const String blogs = '/blogs';
+  static const String userBlogs = '/user-blogs';
+  static const String createBlog = '/create-blog';
+  static const String updateBlog = '/update-blog';
+  static const String servicesScreen = '/services-screen';
 
   static final pages = [
     GetPage(name: main, page: () => const MainLayout(title: 'Coworking Space')),
@@ -55,5 +64,9 @@ class AppRoutes {
     GetPage(name: adminProfile, page: () => AdminProfile()),
     GetPage(name: updateAdminProfile, page: () => AdminProfileUpdate()),
     GetPage(name: users, page: () => UsersScreen()),
+    GetPage(name: blogs, page: () => BlogsScreen()),
+    GetPage(name: userBlogs, page: () => UserBlogsView()),
+    GetPage(name: createBlog, page: () => CreateBlogView(userId: Get.arguments as String)),
+    GetPage(name: updateBlog, page: () => UpdateBlogScreen(blog: Get.arguments)),
   ];
 }

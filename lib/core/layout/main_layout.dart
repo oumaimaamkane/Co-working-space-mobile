@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:coworking_space_mobile/core/layout/app_bar.dart';
 import 'package:coworking_space_mobile/features/home.dart';
-import 'package:coworking_space_mobile/features/contact.dart';
+import 'package:coworking_space_mobile/features/services.dart';
 
 class MainLayout extends StatefulWidget {
   final String title;
@@ -18,7 +18,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const ContactScreen(),
+    ServicesScreen(),
   ];
 
   @override
@@ -46,7 +46,7 @@ class _MainLayoutState extends State<MainLayout> {
         ),
         const BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.envelope),
-          label: 'Contact',
+          label: 'Services',
         ),
         BottomNavigationBarItem(
           icon: PopupMenuButton<String>(
